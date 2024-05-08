@@ -55,6 +55,7 @@
     <Compile Include="Interface\ICityInterface\ICityInterface.cs" />
     <Compile Include="Interface\IRegisterInterface\IRegisterDetailsInterface.cs" />
     <Compile Include="Interface\IStateInterface\IStateInterface.cs" />
+    <Compile Include="Interface\IStudentInterface\IGetTaskInterface.cs" />
     <Compile Include="Interface\ITaskInterface\ITaskInterface.cs" />
     <Compile Include="Interface\ITeacherInterface\ITeachersInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,7 +66,6 @@
     <Compile Include="Services\TeacherServices\TeacherServices.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interface\IStudentInterface\" />
     <Folder Include="Services\StudentServices\" />
   </ItemGroup>
   <ItemGroup>
