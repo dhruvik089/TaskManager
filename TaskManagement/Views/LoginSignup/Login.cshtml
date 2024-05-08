@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (TempData["LoginFail"] != null)
+{
+    <script>
+            toastr.error('@TempData["LoginFail"]');
+    </script>
+}
+
+@if (TempData["selectRole"] != null)
+{
+    <script>
+            toastr.error('@TempData["selectRole"]');
+    </script>
+}
+
+@if (TempData["RegistrationSuccess"] != null)
+{
+    <script>
+            toastr.success('@TempData["RegistrationSuccess"]');
+    </script>
+}
+
+@if (TempData["Success"] != null)
+{
+    <script>
+            toastr.success('@TempData["Success"]');
+    </script>
+}
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h2 class="heading-section">Task Management System</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                <div class="wrap d-md-flex">
+                    <div class="img" style="background-image: url(https://images.unsplash.com/photo-1529539795054-3c162aab037a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bG9naW58ZW58MHx8MHx8fDA%3D); "></div>
+                    <div class="login-wrap p-4 p-md-5">
+                        <div class="d-flex">
+                            <div class="w-100">
+                                <h3 class="mb-4">Sign In</h3>
+                            </div>
+
+                            <div class="w-100">
+                                <p class="social-media d-flex justify-content-end">
+                                    <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
+                                    <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+                                </p>
+                            </div>
+                        </div>
+                        <form method="post">
+
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Select role</label>
+                                <select class="form-control" name="UserRole" id="Role" required>
+                                    <option selected hidden>--Select Role--</option>
+                                    <option value="Student">Student</option>
+                                    <option value="Teacher">Teacher</option>
+                                </select>
+
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="name">Username</label>
+                                <input type="text" class="form-control" name="UserName" placeholder="Username" required>
+
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="password">Password</label>
+                                <input type="password" class="form-control" name="Password" placeholder="Password" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
+                            </div>
+                            <div class="form-group d-md-flex">
+                                <div class="w-50 text-left">
+                                    <label class="checkbox-wrap checkbox-primary mb-0">
+                                        Remember Me
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="w-50 text-md-right">
+                                    <a href="#">Forgot Password</a>
+
+                                </div>
+                            </div>
+                        </form>
+
+                        <p class="text-center">Not a member?   @Html.ActionLink("Sign Up", "RegistrationPage")</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,47 @@
+﻿@model TaskManagement.Models.ViewModel.TaskModel
+
+
+<h2 class="text-center text-success">Add Task</h2>
+<div class="container-fluid">
+    <div class="card mx-auto" style="width:80%">
+        <div class="card-body">
+            @using (Html.BeginForm(FormMethod.Post))
+            {
+
+                <input type="text" name="CreatorID" value=@ViewBag.TeacherId hidden />
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        @Html.LabelFor(m => m.TaskName)
+                        @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.TaskName)
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        @Html.LabelFor(m => m.Deadline)
+                        <input type="date" name="Deadline" class="form-control" />
+                        @Html.ValidationMessageFor(m => m.Deadline)
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        @Html.LabelFor(m => m.Description)
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Description)
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        @Html.LabelFor(m => m.CreatorID)
+                        <input  class="form-control text-danger" name="CreatorID" value=@ViewBag.teacherId readonly />
+                        @Html.ValidationMessageFor(m => m.CreatorID)
+                    </div>
+                </div>
+
+                <input type="submit" name="submit" class="btn btn-outline-success" />}
+
+        </div>
+    </div>
+</div>

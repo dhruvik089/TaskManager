@@ -1,0 +1,48 @@
+﻿@using (Html.BeginForm(FormMethod.Post))
+{
+    <div class="container">
+        <div class="card mx-auto mt-5" style="width:80%">
+            <div class="card-header">
+                <h2 class=" text-success">Assign Task</h2>
+            </div>
+            <div class="card-body">
+
+                <form method="post">
+                    <div class="row">
+                        <div class="col-lg-12 mt-5 mb-4">
+                            <select name="StudentID" multiple id="StudentID"
+                                    class="form-control" size="5">
+                                <option value="Select" disabled selected>-- Select Student --</option>
+
+                                @if (ViewBag.AllStudent != null)
+                                {
+
+                                    foreach (var item in ViewBag.AllStudent)
+                                    {
+                                        <option value="@item.StudentID">@item.Username</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2 mb-4">
+                        <div class="col-lg-12">
+                            <select name="TaskID" id="TaskID" class="form-control">
+                                <option value="Select" selected>-- Select Task --</option>
+                                @if (ViewBag.AllStudent != null)
+                                {
+
+                                    foreach (var item in ViewBag.AllTask)
+                                    {
+                                        <option value=@item.TaskID>@item.TaskName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <input type="submit" name="submit" class="btn btn-outline-success" />
+                </form>
+            </div>
+        </div>
+    </div>}

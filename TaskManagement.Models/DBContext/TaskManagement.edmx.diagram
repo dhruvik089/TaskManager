@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8bbccfe048414503878e19381cf40f24" Name="Diagram1">
+        <EntityTypeShape EntityType="TaskManagementModel.Cities" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaskManagementModel.States" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaskManagementModel.Students" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaskManagementModel.Teachers" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="TaskManagementModel.FK__Cities__StateID__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="TaskManagementModel.FK__Students__CityID__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="TaskManagementModel.FK__Teachers__CityID__3C69FB99" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TaskManagementModel.Assignment" Width="1.5" PointX="9.75" PointY="3.25" />
+        <EntityTypeShape EntityType="TaskManagementModel.Tasks" Width="1.5" PointX="7.5" PointY="4.875" />
+        <AssociationConnector Association="TaskManagementModel.FK__Assignmen__Stude__49C3F6B7" />
+        <AssociationConnector Association="TaskManagementModel.FK__Assignmen__TaskI__48CFD27E" />
+        <AssociationConnector Association="TaskManagementModel.FK__Tasks__CreatorID__45F365D3" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,155 @@
+﻿@model TaskManagement.Models.ViewModel.RegisterDetailsModel
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+@if (TempData["success"] != null)
+{
+    <script>
+        toastr.success('@TempData["success"]')
+    </script>
+}
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h2 class="heading-section">Task Management System</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                <div class="wrap p-4 p-md-5">
+
+                    <div class="w-100">
+                        <h3 class="mb-4">Registration Form</h3>
+                    </div>
+                    <form method="post">
+
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Select role</label>
+                            <select class="form-control" name="UserRole" id="Role" required>
+                                <option selected hidden>--Select Role--</option>
+                                <option value="Student">Student</option>
+                                <option value="Teacher">Teacher</option>
+                            </select>
+                        </div>
+                        <div class="row ">
+                            <div class="form-group mb-3 col-lg-4">
+                                <label class="label " for="username">Username</label>
+                                @*<input type="text" class="form-control" placeholder="Username" required>*@
+                                @Html.TextBoxFor(m => m.Username, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Username, "", htmlAttributes: new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group mb-3 col-lg-4">
+                                <label class="label" for="email">Email</label>
+                                @*<input type="email" class="form-control" placeholder="Email" required>*@
+                                @Html.TextBoxFor(m => m.Email, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", htmlAttributes: new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group mb-3 col-lg-4">
+                                <label class="label" for="password">Password</label>
+                                @*<input type="password" class="form-control" placeholder="Password" required>*@
+                                @Html.TextBoxFor(m => m.Password, htmlAttributes: new { @class = "form-control", type = "password" })
+                                @Html.ValidationMessageFor(m => m.Password, "", htmlAttributes: new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group mb-3 col-lg-4">
+                                <label class="label" for="contact">Contact</label>
+                                @*<input type="number" min="0" class="form-control" placeholder="Password" required>*@
+                                @Html.TextBoxFor(m => m.ContactNumber, htmlAttributes: new { @class = "form-control", type = "number", min = "0" })
+                                @Html.ValidationMessageFor(m => m.ContactNumber, "", htmlAttributes: new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-lg-4">
+                                <label for="exampleFormControlSelect1">State</label>
+                                <select name="StateId" id="StateId" class="form-control" aria-label="Default select example">
+                                    <option value="Select" class="form-select" selected>Select State</option>
+                                    @if (ViewBag.States != null)
+
+                                    {
+                                        foreach (var item in ViewBag.States)
+                                        {
+                                            <option value="@item.StateID">@item.StateName</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                            <div class=" form-group col-lg-4">
+                                <label for="exampleFormControlSelect1">City</label>
+                                <select name="CityId" id="CityID" class="form-control" class="form-select" aria-label="Default select example">
+                                    <option value="1" selected>Select City</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="address">Address</label>
+                            @Html.TextAreaFor(m => m.Address, htmlAttributes: new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
+                        </div>
+
+                        <div class="form-group d-md-flex">
+                            <div class="w-50 text-left">
+                                <label class="checkbox-wrap checkbox-primary mb-0">
+                                    Remember Me
+                                    <input type="checkbox" checked>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="w-50 text-md-right">
+                                <a href="#">Forgot Password</a>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+                    <div class="w-100">
+                        <p class="social-media d-flex justify-content-end">
+                            <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
+                            <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+                        </p>
+                    </div>
+                    <p class="text-center">Already member? @Html.ActionLink("Login", "Login")</p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    function ChangeCityDropdown(data) {
+
+        for (var i = 0; i < data.length; i++) {
+            var options = '<option id="' + data[i].CityID + '" value="' + data[i].CityID + '" >' + data[i].CityName + '</option>';
+            $('#CityID').append(options);
+        }
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('#StateId').on('change', function () {
+            $('#CityID').html('<option value="Select">Select City</option>');
+            var StateId = document.getElementById('StateId').value;
+            $.ajax({
+                type: "GET",
+                url: "/LoginSignup/CitiesByState?id=" + StateId,
+                success: function (data) {
+                    console.log(data)
+                    ChangeCityDropdown(data)
+                }
+
+            });
+        })
+    })
+
+</script>
