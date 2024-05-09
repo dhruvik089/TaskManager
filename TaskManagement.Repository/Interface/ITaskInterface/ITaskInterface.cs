@@ -12,6 +12,7 @@ namespace TaskManagement.Repository.Interface.ITaskInterface
     {
         Tasks AddTask(TaskModel _task);
         List<TaskModel> ConvertTaskToTaskModel(List<Tasks> tasks);
-       
+        List<TaskModel> GetAssignmentTasks(int id);
+
     }
 }

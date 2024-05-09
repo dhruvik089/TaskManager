@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,6 +62,32 @@ namespace TaskManagement.Repository.Services.TaskServices
                     return null;
 
                 }
+            }
+        }
+
+        public List<TaskModel> GetAssignmentTasks(int id)
+        {
+
+            try
+            {
+                //Students _student = new Students();
+                List<Tasks> _tasks = new List<Tasks>();
+                //_student = _context.Students.FirstOrDefault(x => x.Username == Username);
+                SqlParameter[] _perameter = new SqlParameter[]
+                {
+                    new SqlParameter("@id",id)
+                };
+                _tasks = _context.Tasks.SqlQuery("Exec ShowAssignment @id", _perameter).ToList();
+                TaskHelper.ConvertTasksToTaskModelHelper(_tasks);
+                //int id = _student.StudentID;
+                //List<Assignment> _assignmentList = _context.Assignment.Where(u => u.StudentID == id).ToList();
+                List<TaskModel> _assignmentList = TaskHelper.ConvertTasksToTaskModelHelper(_tasks);
+
+                return _assignmentList;
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
     }

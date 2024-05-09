@@ -39,6 +39,33 @@ namespace TaskManagement.Helper.Helper.TaskHelper
             }
         }
 
+        public static List<TaskModel> ConvertTasksToTaskModelHelper(List<Tasks> autocreatemodel)
+        {
+            List<TaskModel> _coustomModel = new List<TaskModel>();
+            try
+            {
+                if (autocreatemodel != null && autocreatemodel.Count > 0)
+                {
+                    foreach (Tasks item in autocreatemodel)
+                    {
+                        TaskModel _new = new TaskModel();
+                        _new.TaskID = item.TaskID;
+                        _new.TaskName = item.TaskName;
+                        _new.Description = item.Description;
+                        _new.Deadline = item.Deadline;
+                        _new.CreatorID = item.CreatorID;
+                        _coustomModel.Add(_new);
+                    }
+                }
+                return _coustomModel;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+
         public static Tasks ConvertTaskModeltoTask(TaskModel taskModel)
         {
             try

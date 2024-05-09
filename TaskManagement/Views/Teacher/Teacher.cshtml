@@ -1,4 +1,11 @@
-﻿<!--*******************
+﻿@if (TempData["Success"] != null)
+{
+    <script>
+            toastr.success('@TempData["Success"]');
+    </script>
+}
+
+<!--*******************
     Preloader start
 ********************-->
 <div id="preloader">

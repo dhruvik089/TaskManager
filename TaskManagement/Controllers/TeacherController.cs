@@ -16,7 +16,7 @@ using TaskManagement.Repository.Services.TeacherServices;
 
 namespace TaskManagement.Controllers
 {
-    //[CustomeAuthorize]
+    [CustomeAuthorize]
     public class TeacherController : Controller
     {
         ITaskInterface _task = new TaskServices();
