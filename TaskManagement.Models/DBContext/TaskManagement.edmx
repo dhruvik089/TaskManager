@@ -12,6 +12,7 @@
           <Property Name="AssignmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TaskID" Type="int" />
           <Property Name="StudentID" Type="int" />
+          <Property Name="Task_complete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Cities">
           <Key>
@@ -136,6 +137,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="changeTaskStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="taskId" Type="int" Mode="In" />
+          <Parameter Name="studentId" Type="int" Mode="In" />
+        </Function>
         <Function Name="FindCity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -298,7 +303,11 @@
             <End Role="Tasks" EntitySet="Tasks" />
           </AssociationSet>
           <FunctionImport Name="ShowAssignment" ReturnType="Collection(TaskManagementModel.ShowAssignment_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="changeTaskStatus">
+            <Parameter Name="taskId" Mode="In" Type="Int32" />
+            <Parameter Name="studentId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Assignment">
@@ -310,6 +319,7 @@
           <Property Name="StudentID" Type="Int32" />
           <NavigationProperty Name="Students" Relationship="TaskManagementModel.FK__Assignmen__Stude__49C3F6B7" FromRole="Assignment" ToRole="Students" />
           <NavigationProperty Name="Tasks" Relationship="TaskManagementModel.FK__Assignmen__TaskI__48CFD27E" FromRole="Assignment" ToRole="Tasks" />
+          <Property Name="Task_complete" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Tasks">
           <Key>
@@ -432,6 +442,7 @@
           <EntitySetMapping Name="Assignment">
             <EntityTypeMapping TypeName="TaskManagementModel.Assignment">
               <MappingFragment StoreEntitySet="Assignment">
+                <ScalarProperty Name="Task_complete" ColumnName="Task_complete" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="TaskID" ColumnName="TaskID" />
                 <ScalarProperty Name="AssignmentID" ColumnName="AssignmentID" />
@@ -471,6 +482,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="changeTaskStatus" FunctionName="TaskManagementModel.Store.changeTaskStatus" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

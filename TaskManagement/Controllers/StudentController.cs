@@ -12,7 +12,7 @@ using TaskManagement.Repository.Services.TaskServices;
 
 namespace TaskManagement.Controllers
 {
-    [CustomeAuthorize]
+    [StudentAuthorize]
     public class StudentController : Controller
     {
         TaskManagementEntities _context = new TaskManagementEntities();
@@ -26,9 +26,29 @@ namespace TaskManagement.Controllers
         public ActionResult ShowTask()
         {
             string username = LoginSession.LoginUser;
-            int studentId =_context.Students.FirstOrDefault(x => x.Username == username).StudentID;
-            List<TaskModel> _assignments = _task.GetAssignmentTasks(studentId);            
+            int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
+            List<AssignmentModel> _assignments = _task.GetAssignmentTasks(studentId);
+
             return View(_assignments);
         }
+
+        public ActionResult SetAssignmentStatus(int id)
+        {
+            bool setStatus = _task.AssignmentStatus(id);
+
+            if (setStatus)
+            {
+                return RedirectToAction("AssignmentList", "Student");
+            }
+
+            return RedirectToAction("AssignmentList");
+        }
+
+        public ActionResult Logout()
+        {
+            LoginSession.Logout();
+            return RedirectToAction("Login");
+        }
+
     }
 }

@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\AssignmentModel.cs" />
+    <Compile Include="ViewModel\AssignTaskModel.cs" />
     <Compile Include="ViewModel\CityModel.cs" />
     <Compile Include="ViewModel\RegisterDetailsModel.cs" />
     <Compile Include="ViewModel\StateModel.cs" />

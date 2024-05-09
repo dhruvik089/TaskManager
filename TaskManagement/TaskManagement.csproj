@@ -140,7 +140,8 @@
     <Compile Include="Controllers\LoginSignupController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
-    <Compile Include="CustomFilter\CustomeAuthorizeAttribute.cs" />
+    <Compile Include="CustomFilter\StudentAuthorizeAttribute.cs" />
+    <Compile Include="CustomFilter\TeacherAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

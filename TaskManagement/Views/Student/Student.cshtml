@@ -213,7 +213,11 @@
                                     <li>
                                         <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
                                     </li>
-                                    <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                    <li>
+                                        @Html.ActionLink("Log Out", "Login",controllerName: "LoginSignup")
+
+                                        @*<a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a>*@
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -321,3 +325,11 @@
         Footer end
     ***********************************-->
 </div>
+
+<script src="~/Content/Theme/TeacherDashBoard/plugins/common/common.min.js"></script>
+<script src="~/Content/Theme/TeacherDashBoard/js/custom.min.js"></script>
+<script src="~/Content/Theme/TeacherDashBoard/js/settings.js"></script>
+<script src="~/Content/Theme/TeacherDashBoard/js/gleek.js"></script>
+<script src="~/Content/Theme/TeacherDashBoard/js/styleSwitcher.js"></script>
+
+<script src="~/Content/Theme/StudentDashBoard/js/dashboard/dashboard-1.js"></sc

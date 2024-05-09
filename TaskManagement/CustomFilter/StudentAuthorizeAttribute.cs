@@ -13,28 +13,12 @@ using TaskManagement.Models.ViewModel;
 namespace TaskManagement.CustomFilter
 {
 
-    public class CustomeAuthorizeAttribute : AuthorizeAttribute
+    public class StudentAuthorizeAttribute : AuthorizeAttribute
     {
-        //TaskManagementEntities _context = new TaskManagementEntities();
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-
-            //RegisterDetailsModel _registerDetailsModel = new RegisterDetailsModel();
-            if (LoginSession.UserRole == "Teacher")
-            {
-                //Teachers _teachers = TeacherHelper.ConvertRegisterDetailsModelToTeacherContext(_registerDetailsModel);
-                //_teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
-                if (LoginSession.LoginUser != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else if (LoginSession.UserRole == "Student")
+           if (LoginSession.UserRole == "Student")
             {
                 if (LoginSession.LoginUser != null)
                 {
@@ -60,7 +44,6 @@ namespace TaskManagement.CustomFilter
             }
             else
             {
-                // Not access Other page without login using forbidden
                 filterContext.Result = new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
         }

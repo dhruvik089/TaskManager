@@ -51,5 +51,18 @@ namespace TaskManagement.Models.DBContext
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShowAssignment_Result>("ShowAssignment", idParameter);
         }
+    
+        public virtual int changeTaskStatus(Nullable<int> taskId, Nullable<int> studentId)
+        {
+            var taskIdParameter = taskId.HasValue ?
+                new ObjectParameter("taskId", taskId) :
+                new ObjectParameter("taskId", typeof(int));
+    
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("studentId", studentId) :
+                new ObjectParameter("studentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("changeTaskStatus", taskIdParameter, studentIdParameter);
+        }
     }
 }

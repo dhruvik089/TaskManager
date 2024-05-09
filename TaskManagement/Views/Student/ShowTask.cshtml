@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TaskManagement.Models.ViewModel.TaskModel>
+﻿@model IEnumerable<TaskManagement.Models.ViewModel.AssignmentModel>
 
 <div class="container">
 
@@ -12,15 +12,18 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.TaskID)
+
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TaskName)
+                @Html.DisplayNameFor(model => model.Tasks.TaskName)
+
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Tasks.Description)
+
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Deadline)
+                @Html.DisplayNameFor(model => model.Tasks.Deadline)
             </th>
             <th>
                 Action
@@ -35,19 +38,22 @@
                     @Html.DisplayFor(modelItem => item.TaskID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TaskName)
+                    @Html.DisplayFor(modelItem => item.Tasks.TaskName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.DisplayFor(modelItem => item.Tasks.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Deadline)
+                    @Html.DisplayFor(modelItem => item.Tasks.Deadline)
                 </td>
 
                 <td>
-                    @Html.CheckBox("complete", htmlAttributes: new { @class = "checkbox", onclick = "disableAfterCheck()" })
-                    <label class="label">                       
-                    </label>
+                    @if (item.Task_complete == false)
+                    {
+                        <div><a class="text-danger" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div> }
+                    else
+                    {
+                        <div>Already Completed</div>}
                 </td>
             </tr>
         }
@@ -55,24 +61,3 @@
     </table>
 
 </div>
-
-<script>
-
-    var checkbox = document.getElementsByClassName('checkbox');
-    var label = document.getElementsByClassName('label');
-    for (var i = 0; i < checkbox.length; i++) {
-        label[i].innerHTML = "Pending"
-        label[i].style.color = "red"
-    }
-
-    function disableAfterCheck() {
-        for (var i = 0; i < checkbox.length; i++) {
-            if (checkbox[i].checked) {
-                label[i].innerHTML = "Complete"
-                label[i].style.color="green"
-                checkbox[i].disabled = true;
-            }
-          
-        }
-    }
-</script>

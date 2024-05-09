@@ -17,6 +17,7 @@ namespace TaskManagement.Models.DBContext
         public int AssignmentID { get; set; }
         public Nullable<int> TaskID { get; set; }
         public Nullable<int> StudentID { get; set; }
+        public bool Task_complete { get; set; }
     
         public virtual Students Students { get; set; }
         public virtual Tasks Tasks { get; set; }

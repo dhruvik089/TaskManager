@@ -16,7 +16,7 @@ using TaskManagement.Repository.Services.TeacherServices;
 
 namespace TaskManagement.Controllers
 {
-    [CustomeAuthorize]
+    [TeacherAuthorize]
     public class TeacherController : Controller
     {
         ITaskInterface _task = new TaskServices();
@@ -86,6 +86,11 @@ namespace TaskManagement.Controllers
 
                 return null;
             }
+        }
+        public ActionResult Logout()
+        {
+            LoginSession.Logout();
+            return RedirectToAction("Login");
         }
 
     }
