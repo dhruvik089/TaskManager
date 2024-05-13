@@ -13,7 +13,7 @@ namespace TaskManagement.Models.ViewModel
         [Required]
         public int TaskID { get; set; }
         [Required]
-        [RegularExpression("^([a-zA-Z0-9 .&'-]+)$",ErrorMessage ="Enter valid name")]
+        [RegularExpression("^([a-zA-Z0-9 .&'-]+)$", ErrorMessage = "Enter valid name")]
         public string TaskName { get; set; }
         [Required]
         public string Description { get; set; }
@@ -21,5 +21,15 @@ namespace TaskManagement.Models.ViewModel
         public Nullable<System.DateTime> Deadline { get; set; }
         [Required]
         public Nullable<int> CreatorID { get; set; }
+    }
+
+    public class TaskList
+    {
+        public int TaskID { get; set; }
+        public string TaskName { get; set; }
+        public string Description { get; set; }
+        public string Username { get; set; }
+        public bool Task_complete { get; set; }
+        public Nullable<System.DateTime> Deadline { get; set; }
     }
 }

@@ -1,0 +1,35 @@
+﻿@model List<TaskManagement.Models.ViewModel.TaskList>
+
+<div class="container">
+
+    <h3 class="text-center">All Pendding Task</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>TaskID</th>
+                <th>Task Name</th>
+                <th>Student Name</th>
+                <th>Description</th>
+                <th>Deadline</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.TaskID</td>
+                    <td>@item.Username</td>
+                    <td>@item.TaskName</td>
+                    <td>@item.Description</td>
+                    <td>@item.Deadline</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary">
+        @Html.ActionLink("back to Home", "Teacher", "Teacher", htmlAttributes: new { @class = "text-decoration-none text-white" })
+    </button>
+
+</div>

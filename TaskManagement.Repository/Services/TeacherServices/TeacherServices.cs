@@ -61,7 +61,61 @@ namespace TaskManagement.Repository.Services.TeacherServices
             return assignedAssignments;
         }
 
-        public int TeacherPendingTask(int id)
+        public List<TaskList> TeacherPendingTask(int id)
+        {
+            try
+            {
+                SqlParameter[] sqlParameters = new SqlParameter[]
+                {
+                      new SqlParameter("@id",id)
+                };
+                List<TaskList> assignmentLists = _registerTeacher.Database.SqlQuery<TaskList>("exec TeacherPendingTask @id", sqlParameters).ToList();
+                return assignmentLists;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<TaskList> TeacherCompleteTask(int id)
+        {
+
+
+            try
+            {
+
+                SqlParameter[] sqlParameters = new SqlParameter[]
+                {
+                      new SqlParameter("@id",id)
+                };
+                List<TaskList> assignmentLists = _registerTeacher.Database.SqlQuery<TaskList>("exec TeacherCompleteTask @id", sqlParameters).ToList();
+                return assignmentLists;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<TaskList> TotalCreatTask(int id)
+        {
+            try
+            {
+                SqlParameter[] sqlParameters = new SqlParameter[]
+                {
+                      new SqlParameter("@id",id)
+                };
+                List<TaskList> assignmentLists = _registerTeacher.Database.SqlQuery<TaskList>("exec TotalCreatTask @id", sqlParameters).ToList();
+                return assignmentLists;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<TaskList> TotalAssignTask(int id)
         {
             try
             {
@@ -71,65 +125,8 @@ namespace TaskManagement.Repository.Services.TeacherServices
                 {
                       new SqlParameter("@id",id)
                 };
-                List<TaskModel> assignmentLists = _registerTeacher.Database.SqlQuery<TaskModel>("exec TeacherPendingTask @id", sqlParameters).ToList();
-                return assignmentLists.Count();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        public int TeacherCompleteTask(int id)
-        {
-
-
-            try
-            {
-                int _totaltask;
-
-                SqlParameter[] sqlParameters = new SqlParameter[]
-                {
-                      new SqlParameter("@id",id)
-                };
-                List<TaskModel> assignmentLists = _registerTeacher.Database.SqlQuery<TaskModel>("exec TeacherCompleteTask @id", sqlParameters).ToList();
-                return assignmentLists.Count();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        public int TotalCreatTask(int id)
-        {
-            try
-            {
-                SqlParameter[] sqlParameters = new SqlParameter[]
-                {
-                      new SqlParameter("@id",id)
-                };
-                List<TaskModel> assignmentLists = _registerTeacher.Database.SqlQuery<TaskModel>("exec TotalCreatTask @id", sqlParameters).ToList();
-                return assignmentLists.Count();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        public int TotalAssignTask(int id)
-        {
-            try
-            {
-                int _totaltask;
-
-                SqlParameter[] sqlParameters = new SqlParameter[]
-                {
-                      new SqlParameter("@id",id)
-                };
-                List<TaskModel> assignmentLists = _registerTeacher.Database.SqlQuery<TaskModel>("exec TotalAssignTask @id", sqlParameters).ToList();
-                return assignmentLists.Count();
+                List<TaskList> assignmentLists = _registerTeacher.Database.SqlQuery<TaskList>("exec TotalAssignTask @id", sqlParameters).ToList();
+                return assignmentLists;
             }
             catch (Exception e)
             {

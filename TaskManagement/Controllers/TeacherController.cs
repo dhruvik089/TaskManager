@@ -19,26 +19,33 @@ namespace TaskManagement.Controllers
     [TeacherAuthorize]
     public class TeacherController : Controller
     {
-        ITaskInterface _task = new TaskServices();
-        ITeachersInterface _teacherinterface = new TeacherServices();
-        TaskManagementEntities _context = new TaskManagementEntities();
+        ITaskInterface _task;
+        ITeachersInterface _teacherinterface;
+        TaskManagementEntities _context;
+
+        public TeacherController()
+        {
+            _task = new TaskServices();
+            _teacherinterface = new TeacherServices();
+            _context = new TaskManagementEntities();
+        }
 
         public ActionResult Teacher()
         {
             Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
 
-            ViewBag.PendingTask = _teacherinterface.TeacherPendingTask(_teachers.TeacherID);
-            ViewBag.CompleteTask = _teacherinterface.TeacherCompleteTask(_teachers.TeacherID);
-            ViewBag.TotalTask = _teacherinterface.TotalCreatTask(_teachers.TeacherID);
-            ViewBag.TotalAssignTask = _teacherinterface.TotalAssignTask(_teachers.TeacherID);
+            ViewBag.PendingTask = _teacherinterface.TeacherPendingTask(_teachers.TeacherID).Count();
+            ViewBag.CompleteTask = _teacherinterface.TeacherCompleteTask(_teachers.TeacherID).Count();
+            ViewBag.TotalTask = _teacherinterface.TotalCreatTask(_teachers.TeacherID).Count();
+            ViewBag.TotalAssignTask = _teacherinterface.TotalAssignTask(_teachers.TeacherID).Count();
 
             return View();
         }
 
         public ActionResult CreateTask()
         {
-            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
-            ViewBag.teacherId = _teachers.TeacherID;
+            //Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
+            //ViewBag.teacherId = _teachers.TeacherID;
             return View();
         }
         [HttpPost]
@@ -107,5 +114,36 @@ namespace TaskManagement.Controllers
             return RedirectToAction("Login");
         }
 
+        public ActionResult TotalCreateTask()
+        {
+            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
+            List<TaskList> _TotalTask = _teacherinterface.TotalCreatTask(_teachers.TeacherID);
+            return View(_TotalTask);
+        }
+        public ActionResult TotalCompleteTask()
+        {
+            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
+            List<TaskList> _TotalTask = _teacherinterface.TeacherCompleteTask(_teachers.TeacherID);
+            return View(_TotalTask);
+        }
+
+        public ActionResult TotalPendingTask()
+        {
+            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
+            List<TaskList> _TotalTask = _teacherinterface.TeacherPendingTask(_teachers.TeacherID);
+            return View(_TotalTask);
+        }
+
+        public ActionResult TotalAssignTask()
+        {
+            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
+            List<TaskList> _TotalTask = _teacherinterface.TotalAssignTask(_teachers.TeacherID);
+            return View(_TotalTask);
+        }
+    
+        public ActionResult DeleteTask(int id)
+        {
+            return View();
+        }
     }
 }

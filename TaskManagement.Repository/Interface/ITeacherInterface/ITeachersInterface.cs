@@ -14,10 +14,12 @@ namespace TaskManagement.Repository.Interface.ITeacherInterface
         bool AddTeacher(TeacherModel loginDetails);
         bool CheackTeacher(TeacherModel _teacherModel);
 
-        int TeacherPendingTask(int id);
-        int TeacherCompleteTask(int id);
-        int TotalCreatTask(int id);
-        int TotalAssignTask(int id);
+        List<TaskList> TeacherPendingTask(int id);
+        List<TaskList> TeacherCompleteTask(int id);
+        List<TaskList> TotalCreatTask(int id);
+        List<TaskList> TotalAssignTask(int id);
+
+        bool DeleteTask(int id);
 
         List<Assignment> AssignAssignment(List<AssignmentModel> assignments);
     }
