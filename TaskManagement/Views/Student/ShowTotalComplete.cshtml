@@ -1,0 +1,42 @@
+﻿@model List<TaskManagement.Models.ViewModel.AssignmentList>
+
+<div class="container">
+
+
+    <h1 class="text-center">Complete Task</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Assignment ID</th>
+                <th>Task Name</th>
+                <th>Description</th>
+                <th>Dead Line</th>
+                <th>Teacher Name</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.AssignmentID</td>
+                    <td>@item.TaskName</td>
+                    <td>@item.Description</td>
+                    <td>@item.Deadline</td>
+                    <td>@item.Username</td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+
+
+    <button class="btn btn-primary">
+        @Html.ActionLink("Home Page", "Student", "Student", htmlAttributes: new { @class = "text-decoration-none" })
+    </button>
+
+</div>

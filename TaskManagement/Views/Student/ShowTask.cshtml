@@ -1,29 +1,28 @@
-﻿@model IEnumerable<TaskManagement.Models.ViewModel.AssignmentModel>
+﻿@model  List<TaskManagement.Models.ViewModel.AssignmentList>
+
 
 <div class="container">
-
-
     <h2 class="text-center">TaskView</h2>
-    <input />
-    <p>
-        @Html.ActionLink("Home Page", "Student", "Student")
-    </p>
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TaskID)
+                @*@Html.DisplayNameFor(model => model.TaskID)*@
+                TaskID
 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tasks.TaskName)
+                @*@Html.DisplayNameFor(model => model.Tasks.TaskName)*@
+                TaskName
 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tasks.Description)
+                @*@Html.DisplayNameFor(model => model.Tasks.Description)*@
+                Description
 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tasks.Deadline)
+                @*@Html.DisplayNameFor(model => model.Tasks.Deadline)*@
+                Deadline
             </th>
             <th>
                 Action
@@ -35,29 +34,47 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TaskID)
+                    @Html.DisplayFor(modelItem => item.AssignmentID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Tasks.TaskName)
+                    @Html.DisplayFor(modelItem => item.TaskName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Tasks.Description)
+                    @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Tasks.Deadline)
+                    @Html.DisplayFor(modelItem => item.Deadline)
                 </td>
 
                 <td>
-                    @if (item.Task_complete == false)
+
+                    @if (item.Deadline < DateTime.Now)
                     {
-                        <div><a class="text-danger" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div> }
+                        item.Task_complete = true;
+                        <div class="text-danger">You are late</div>
+                    }
+
                     else
                     {
-                        <div>Already Completed</div>}
+
+                        if (item.Task_complete == false)
+                        {
+                            <div><a class="text-danger" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div>
+                        }
+                        else
+                        {
+                            <div class="text-success">Completed</div>
+                        }
+                    }
+
                 </td>
             </tr>
         }
 
     </table>
+
+    <button class="btn btn-primary">
+        @Html.ActionLink("Home Page", "Student", "Student", htmlAttributes: new { @class="text-decoration-none"})
+    </button>
 
 </div>

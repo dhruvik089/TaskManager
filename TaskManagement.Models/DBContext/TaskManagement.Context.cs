@@ -52,17 +52,40 @@ namespace TaskManagement.Models.DBContext
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShowAssignment_Result>("ShowAssignment", idParameter);
         }
     
-        public virtual int changeTaskStatus(Nullable<int> taskId, Nullable<int> studentId)
+        public virtual int changeTaskStatus(Nullable<int> id)
         {
-            var taskIdParameter = taskId.HasValue ?
-                new ObjectParameter("taskId", taskId) :
-                new ObjectParameter("taskId", typeof(int));
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
     
-            var studentIdParameter = studentId.HasValue ?
-                new ObjectParameter("studentId", studentId) :
-                new ObjectParameter("studentId", typeof(int));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("changeTaskStatus", idParameter);
+        }
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("changeTaskStatus", taskIdParameter, studentIdParameter);
+        public virtual ObjectResult<Nullable<int>> totalTask(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("totalTask", idParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> totalCompleteTask(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("totalCompleteTask", idParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> totalPendingTask(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("totalPendingTask", idParameter);
         }
     }
 }

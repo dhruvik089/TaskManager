@@ -14,10 +14,10 @@
                                     class="form-control" size="5">
                                 <option value="Select" disabled selected>-- Select Student --</option>
 
-                                @if (ViewBag.AllStudent != null)
+                                @if (Session["AllTask"]!= null)
                                 {
 
-                                    foreach (var item in ViewBag.AllStudent)
+                                    foreach (var item in Session["AllTask"] as List<TaskManagement.Models.ViewModel.StudentModel>)
                                     {
                                         <option value="@item.StudentID">@item.Username</option>
                                     }

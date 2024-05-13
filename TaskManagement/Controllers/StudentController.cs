@@ -20,6 +20,18 @@ namespace TaskManagement.Controllers
 
         public ActionResult Student()
         {
+
+            string username = LoginSession.LoginUser;
+            int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
+
+            ViewBag.TotalTask = _task.TotalTask(studentId).Count();
+            ViewBag.TotalCompeteTask = _task.CompleteTask(studentId).Count();
+            ViewBag.TotalPendingTask = _task.PendingTask(studentId).Count();
+
+            //Session["TotalTask"] = _task.TotalTask(studentId);
+            //Session["TotalCompeteTask"] = _task.CompleteTask(studentId);
+            //Session["TotalPendingTask"] = _task.PendingTask(studentId);
+
             return View();
         }
 
@@ -27,7 +39,7 @@ namespace TaskManagement.Controllers
         {
             string username = LoginSession.LoginUser;
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
-            List<AssignmentModel> _assignments = _task.GetAssignmentTasks(studentId);
+            List<AssignmentList> _assignments = _task.GetAssignmentTasks(studentId);
 
             return View(_assignments);
         }
@@ -38,10 +50,10 @@ namespace TaskManagement.Controllers
 
             if (setStatus)
             {
-                return RedirectToAction("AssignmentList", "Student");
+                return RedirectToAction("ShowTask", "Student");
             }
 
-            return RedirectToAction("AssignmentList");
+            return RedirectToAction("ShowTask");
         }
 
         public ActionResult Logout()
@@ -50,5 +62,20 @@ namespace TaskManagement.Controllers
             return RedirectToAction("Login");
         }
 
+        public ActionResult ShowTotalComplete()
+        {
+            string username = LoginSession.LoginUser;
+            int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
+            List<AssignmentList> _completeTask=_task.CompleteTask(studentId);
+            return View(_completeTask);
+        }
+
+        public ActionResult ShowPending()
+        {
+            string username = LoginSession.LoginUser;
+            int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
+            List<AssignmentList> _pendingtask = _task.PendingTask(studentId);
+            return View(_pendingtask);
+        }
     }
 }

@@ -8,20 +8,20 @@
             @using (Html.BeginForm(FormMethod.Post))
             {
 
-                <input type="text" name="CreatorID" value=@ViewBag.TeacherId hidden />
+                @*<input type="text" name="CreatorID" value=@ViewBag.TeacherId hidden />*@
                 <div class="row mb-3">
                     <div class="col-lg-12">
                         @Html.LabelFor(m => m.TaskName)
                         @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.TaskName)
+                        @Html.ValidationMessageFor(m => m.TaskName, "", htmlAttributes: new {@class="text-danger" })
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-lg-12">
                         @Html.LabelFor(m => m.Deadline)
-                        <input type="date" name="Deadline" class="form-control" />
-                        @Html.ValidationMessageFor(m => m.Deadline)
+                        <input type="date" name="Deadline" class="form-control deadline" />
+                        @Html.ValidationMessageFor(m => m.Deadline, "", htmlAttributes: new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -29,14 +29,14 @@
                     <div class="col-lg-12">
                         @Html.LabelFor(m => m.Description)
                         @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Description)
+                        @Html.ValidationMessageFor(m => m.Description, "", htmlAttributes: new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
                         @Html.LabelFor(m => m.CreatorID)
-                        <input  class="form-control text-danger" name="CreatorID" value=@ViewBag.teacherId readonly />
-                        @Html.ValidationMessageFor(m => m.CreatorID)
+                        <input class="form-control text-danger" name="CreatorID" value=@ViewBag.teacherId readonly />
+                        @Html.ValidationMessageFor(m => m.CreatorID, "", htmlAttributes: new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -45,3 +45,5 @@
         </div>
     </div>
 </div>
+
+<script>$('.deadline').prop('min', new Date().toLocaleDateString('en-CA'));</script>

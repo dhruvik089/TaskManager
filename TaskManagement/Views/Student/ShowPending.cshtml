@@ -1,0 +1,50 @@
+﻿@model List<TaskManagement.Models.ViewModel.AssignmentList>
+
+<div class="container">
+
+
+    <h1 class="text-center">Pending Task</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Assignment ID</th>
+                <th>Task Name</th>
+                <th>Description</th>
+                <th>Dead Line</th>
+                <th>Teacher Name</th>
+                <th>Submit</th>
+            </tr>
+        </thead>
+        <tbody>
+
+               @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.AssignmentID</td>
+                        <td>@item.TaskName</td>
+                        <td>@item.Description</td>
+                        <td>@item.Deadline</td>
+                        <td>@item.Username</td>
+                        <td>
+                            @if (item.Task_complete == false)
+                            {
+                                <div><a class="text-danger" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div>
+                            }
+                            else
+                            {
+                                <div class="text-success">Completed</div>
+                            }
+                        </td>
+
+                    </tr>
+                }
+        </tbody>
+    </table>
+
+
+    <button class="btn btn-primary">
+        @Html.ActionLink("Home Page", "Student", "Student", htmlAttributes: new { @class = "text-decoration-none" })
+    </button>
+
+</div>

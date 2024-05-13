@@ -138,13 +138,21 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="changeTaskStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="taskId" Type="int" Mode="In" />
-          <Parameter Name="studentId" Type="int" Mode="In" />
+          <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
         <Function Name="FindCity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="ShowAssignment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="totalCompleteTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="totalPendingTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="totalTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="TaskManagementModelStoreContainer">
@@ -306,8 +314,16 @@
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="changeTaskStatus">
-            <Parameter Name="taskId" Mode="In" Type="Int32" />
-            <Parameter Name="studentId" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="totalTask" ReturnType="Collection(Int32)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="totalCompleteTask" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="totalPendingTask" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Assignment">
@@ -483,6 +499,9 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="changeTaskStatus" FunctionName="TaskManagementModel.Store.changeTaskStatus" />
+          <FunctionImportMapping FunctionImportName="totalTask" FunctionName="TaskManagementModel.Store.totalTask" />
+          <FunctionImportMapping FunctionImportName="totalCompleteTask" FunctionName="TaskManagementModel.Store.totalCompleteTask" />
+          <FunctionImportMapping FunctionImportName="totalPendingTask" FunctionName="TaskManagementModel.Store.totalPendingTask" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

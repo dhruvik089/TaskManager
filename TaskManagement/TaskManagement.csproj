@@ -553,6 +553,7 @@
     <Content Include="Content\Theme\StudentDashBoard\images\profile\9.jpg" />
     <Content Include="Content\Theme\StudentDashBoard\images\profile\cover.jpg" />
     <Content Include="Content\Theme\StudentDashBoard\images\profile\profile.png" />
+    <Content Include="Content\Theme\StudentDashBoard\images\Task Management_Logo.png" />
     <Content Include="Content\Theme\StudentDashBoard\images\users\1.jpg" />
     <Content Include="Content\Theme\StudentDashBoard\images\users\2.jpg" />
     <Content Include="Content\Theme\StudentDashBoard\images\users\3.jpg" />
@@ -5442,6 +5443,7 @@
     <Content Include="Content\Theme\TeacherDashBoard\images\profile\9.jpg" />
     <Content Include="Content\Theme\TeacherDashBoard\images\profile\cover.jpg" />
     <Content Include="Content\Theme\TeacherDashBoard\images\profile\profile.png" />
+    <Content Include="Content\Theme\TeacherDashBoard\images\Task Management_Logo.png" />
     <Content Include="Content\Theme\TeacherDashBoard\images\users\1.jpg" />
     <Content Include="Content\Theme\TeacherDashBoard\images\users\2.jpg" />
     <Content Include="Content\Theme\TeacherDashBoard\images\users\3.jpg" />
@@ -10603,6 +10605,8 @@
     <Content Include="Views\Teacher\CreateTask.cshtml" />
     <Content Include="Views\Teacher\AsignTask.cshtml" />
     <Content Include="Views\Student\ShowTask.cshtml" />
+    <Content Include="Views\Student\ShowTotalComplete.cshtml" />
+    <Content Include="Views\Student\ShowPending.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

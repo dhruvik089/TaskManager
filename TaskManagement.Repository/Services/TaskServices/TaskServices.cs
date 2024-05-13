@@ -29,7 +29,7 @@ namespace TaskManagement.Repository.Services.TaskServices
             }
             catch (Exception e)
             {
-                return null;
+                throw e;
             }
 
             return tasks;
@@ -60,35 +60,30 @@ namespace TaskManagement.Repository.Services.TaskServices
                 }
                 catch (Exception ex)
                 {
-                    return null;
+                    throw ex;
 
                 }
             }
         }
 
-        public List<AssignmentModel> GetAssignmentTasks(int id)
+        public List<AssignmentList> GetAssignmentTasks(int id)
         {
 
             try
             {
-                //Students _student = new Students();
                 List<Assignment> _tasks = new List<Assignment>();
-                //_student = _context.Students.FirstOrDefault(x => x.Username == Username);
+
                 SqlParameter[] _perameter = new SqlParameter[]
                 {
                     new SqlParameter("@id",id)
                 };
-                _tasks = _context.Assignment.SqlQuery("Exec ShowAssignment @id", _perameter).ToList();
-                TaskHelper.ConvertTasksToTaskModelHelper(_tasks);
-                //int id = _student.StudentID;
-                //List<Assignment> _assignmentList = _context.Assignment.Where(u => u.StudentID == id).ToList();
-                List<AssignmentModel> _assignmentList = TaskHelper.ConvertTasksToTaskModelHelper(_tasks);
+                List<AssignmentList> _taskView = _context.Database.SqlQuery<AssignmentList>("Exec ShowAssignment @id", _perameter).ToList();
 
-                return _assignmentList;
+                return _taskView;
             }
             catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
 
@@ -128,6 +123,67 @@ namespace TaskManagement.Repository.Services.TaskServices
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public List<AssignmentList> TotalTask(int id)
+        {
+            try
+            {
+                int _totaltask;
+
+                SqlParameter[] sqlParameters = new SqlParameter[]
+                {
+                      new SqlParameter("@id",id)
+                };
+                List<AssignmentList> assignmentLists = _context.Database.SqlQuery<AssignmentList>("exec totalTask @id", sqlParameters).ToList();
+                return assignmentLists;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<AssignmentList> CompleteTask(int id)
+        {
+
+            try
+            {
+                int _totaltask;
+
+                SqlParameter[] sqlParameters = new SqlParameter[]
+                {
+                      new SqlParameter("@id",id)
+                };
+               
+                 List<AssignmentList> assignmentLists= _context.Database.SqlQuery<AssignmentList>("exec totalCompleteTask @id", sqlParameters).ToList();
+                return assignmentLists;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<AssignmentList> PendingTask(int id)
+        {
+
+            try
+            {
+                int _totaltask;
+
+                SqlParameter[] sqlParameters = new SqlParameter[]
+                {
+                      new SqlParameter("@id",id)
+                };
+
+                List<AssignmentList> assignmentLists = _context.Database.SqlQuery<AssignmentList>("exec totalPendingTask @id", sqlParameters).ToList();
+                return assignmentLists;
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

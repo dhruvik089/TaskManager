@@ -66,32 +66,32 @@ namespace TaskManagement.Helper.Helper.TaskHelper
             }
         }
 
-        public static List<AssignmentModel> ConvertTasksToTaskModelHelper(List<Assignment> _assignmentList)
-        {
-            List<AssignmentModel> _coustomModel = new List<AssignmentModel>();
-            try
-            {
-                if (_assignmentList != null && _assignmentList.Count > 0)
-                {
-                    foreach (Assignment item in _assignmentList)
-                    {
-                        AssignmentModel _new = new AssignmentModel();
-                        _new.TaskID = item.TaskID;
-                        _new.Tasks.TaskName = item.Tasks.TaskName;
-                        _new.Tasks.Description = item.Tasks.Description;
-                        _new.Tasks.Deadline = item.Tasks.Deadline;
-                        _new.Tasks.CreatorID = item.Tasks.CreatorID;
-                        _coustomModel.Add(_new);
-                    }
-                }
-                return _coustomModel;
-            }
-            catch (Exception e)
-            {
+        //public static List<AssignmentList> ConvertTasksToTaskModelHelper(List<Assignment> _assignmentList)
+        //{
+        //    List<AssignmentList> _coustomModel = new List<AssignmentList>();
+        //    try
+        //    {
+        //        if (_assignmentList != null && _assignmentList.Count > 0)
+        //        {
+        //            foreach (Assignment item in _assignmentList)
+        //            {
+        //                AssignmentList _new = new AssignmentList();
+        //                _new.TaskID = item.TaskID;
+        //                _new.TaskName = item.Tasks.TaskName;
+        //                _new.Description = item.Tasks.Description;
+        //                _new.Deadline = item.Tasks.Deadline;
+        //                _new.CreatorID = item.Tasks.CreatorID;
+        //                _coustomModel.Add(_new);
+        //            }
+        //        }
+        //        return _coustomModel;
+        //    }
+        //    catch (Exception e)
+        //    {
 
-                throw e;
-            }
-        }
+        //        throw e;
+        //    }
+        //}
 
         public static Tasks ConvertTaskModeltoTask(TaskModel taskModel)
         {

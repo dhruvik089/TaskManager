@@ -25,6 +25,13 @@ namespace TaskManagement.Controllers
 
         public ActionResult Teacher()
         {
+            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
+
+            ViewBag.PendingTask = _teacherinterface.TeacherPendingTask(_teachers.TeacherID);
+            ViewBag.CompleteTask = _teacherinterface.TeacherCompleteTask(_teachers.TeacherID);
+            ViewBag.TotalTask = _teacherinterface.TotalCreatTask(_teachers.TeacherID);
+            ViewBag.TotalAssignTask = _teacherinterface.TotalAssignTask(_teachers.TeacherID);
+
             return View();
         }
 
@@ -37,16 +44,23 @@ namespace TaskManagement.Controllers
         [HttpPost]
         public ActionResult CreateTask(TaskModel _taskModel)
         {
-            _task.AddTask(_taskModel);
-            return RedirectToAction("Teacher");
+            if (ModelState.IsValid)
+            {
+                _task.AddTask(_taskModel);
+                return RedirectToAction("Teacher");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public ActionResult AsignTask()
         {
-
             List<Students> _students = _context.Students.ToList();
             List<StudentModel> _studentModelList = StudentHelper.ConvertStudentListToStudentModelList(_students);
-            ViewBag.AllStudent = _studentModelList;
+            //ViewBag.AllStudent = _studentModelList;
+            Session["AllTask"] = _studentModelList;
 
             Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
 
@@ -65,7 +79,7 @@ namespace TaskManagement.Controllers
                 if (ModelState.IsValid)
                 {
                     List<AssignmentModel> assignments = new List<AssignmentModel>();
-                  
+
                     foreach (int studentId in StudentID)
                     {
                         AssignmentModel assignment = new AssignmentModel

@@ -53,7 +53,10 @@ namespace TaskManagement.Controllers.LoginSignup
                     LoginSession.LoginUser = loginDetails.Username;
                     LoginSession.UserRole = loginDetails.UserRole;
                     ViewBag.username = loginDetails.Username;
-                    TempData["Success"] = "Login SuccessFully";
+                    string name= loginDetails.Username;
+                    Session["Teachername"]= LoginSession.LoginUser;
+                    
+                    TempData["SuccessLogin"] = "Login SuccessFully";
                     return RedirectToAction("Teacher", "Teacher");
                 }
                 else if (loginDetails.UserRole == "Student")
@@ -62,7 +65,9 @@ namespace TaskManagement.Controllers.LoginSignup
                     LoginSession.LoginUser = loginDetails.Username;
                     LoginSession.UserRole = loginDetails.UserRole;
                     ViewBag.username = loginDetails.Username;
-                    TempData["Success"] = "Login SuccessFully";
+                    Session["username"] = LoginSession.LoginUser;
+                    
+                    TempData["SuccessLogin"] = "Login SuccessFully";
                     return RedirectToAction("Student", "Student");
                 }
                 else
@@ -93,18 +98,20 @@ namespace TaskManagement.Controllers.LoginSignup
                 {
                     _registerData.AddUser(registerDetailsModel);
                     TempData["RegistrationSuccess"] = "Registration Successfully";
+
                     return RedirectToAction("Login");
                 }
                 else
                 {
+                    ViewBag.States = _state.stateModelList();
                     TempData["Error"] = "Something Wrong";
                     ModelState.AddModelError("Email", "Email already exist");
-                    ViewBag.States = _state.stateModelList();
                     return View();
                 }
             }
-            return View();
-
+                ViewBag.States = _state.stateModelList();
+                return View();
+          
         }
 
         public JsonResult CitiesByState(int id)
