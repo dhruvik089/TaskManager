@@ -186,15 +186,13 @@
 <!--**********************************
     Footer end
 ***********************************-->
-</div>
 
 <script>
     $(document).ready(function () {
         $('.assignTask').on('click', function () {
-            debugger
             var Valueescheck = $(this).val();
             $.ajax({
-                url: '/Teacher/AssinTasks?id=' + Valueescheck,
+                url: '/Teacher/AssignTasks?id=' + Valueescheck,
                 type: 'GET',
                 success: function (data) {
                     console.log(data);

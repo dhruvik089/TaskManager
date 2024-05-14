@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Web;
 using System.Web.Mvc;
-using TaskManagement.Models;
 using TaskManagement.Models.DBContext;
 using TaskManagement.Models.ViewModel;
 using TaskManagement.Repository.Interface.ICityInterface;
 using TaskManagement.Repository.Interface.IRegisterInterface;
 using TaskManagement.Repository.Interface.IStateInterface;
-using TaskManagement.Repository.Interface.ITeacherInterface;
 using TaskManagement.Repository.Services;
 using TaskManagement.Repository.Services.CityServices;
 using TaskManagement.Repository.Services.StateServices;
-using TaskManagement.Repository.Services.TeacherServices;
 using TaskManagement.Helper.Session;
-using TaskManagement.CustomFilter;
 
 namespace TaskManagement.Controllers.LoginSignup
 {

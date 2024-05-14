@@ -39,20 +39,20 @@ namespace TaskManagement.Controllers
             return View();
         }
 
-        public ActionResult CreateTask(int id)
+        public ActionResult CreateTask()
         {
             Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
             ViewBag.teacherId = _teachers.TeacherID;
 
-            List<Tasks> tasks = _context.Tasks.Where(m => m.CreatorID == _teachers.TeacherID).ToList();
-            List<TaskModel> _taskList = _task.ConvertTaskToTaskModel(tasks);
-            ViewBag.AllTask = _taskList;
-            Session["AllTask"] = _taskList;
+            //List<Tasks> tasks = _context.Tasks.Where(m => m.CreatorID == _teachers.TeacherID).ToList();
+            //List<TaskModel> _taskList = _task.ConvertTaskToTaskModel(tasks);
+            //ViewBag.AllTask = _taskList;
+            //Session["AllTask"] = _taskList;
 
-            List<StudentModel> _studentList = _task.NotAsignTask(id);
-            Session["AllStudent"] = _studentList;
-            ViewBag.AllStudent = _studentList;
-            return View(ViewBag.AllTask);
+            //List<StudentModel> _studentList = _task.NotAsignTask(id);
+            //Session["AllStudent"] = _studentList;
+            //ViewBag.AllStudent = _studentList;
+            return View();
         }
         [HttpPost]
        
@@ -99,6 +99,7 @@ namespace TaskManagement.Controllers
                 return null;
             }
         }
+
         public ActionResult Logout()
         {
             LoginSession.Logout();
@@ -111,6 +112,7 @@ namespace TaskManagement.Controllers
             List<TaskList> _TotalTask = _teacherinterface.TotalCreatTask(_teachers.TeacherID);
             return View(_TotalTask);
         }
+
         public ActionResult TotalCompleteTask()
         {
             Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
@@ -156,7 +158,7 @@ namespace TaskManagement.Controllers
             List<StudentModel> _studentList = _task.NotAsignTask(id);
             Session["AllTask"] = _studentList;
             ViewBag.AllStudent = _studentList;
-            return PartialView("AssinTasks", _studentList);
+            return PartialView("AssignTasks", _studentList);
         }
     }
 }

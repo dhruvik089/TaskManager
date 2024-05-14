@@ -37,15 +37,6 @@ namespace TaskManagement.Repository.Services.TeacherServices
             catch (Exception e) { throw e; }
         }
 
-        //public bool CheackTeacher(TeacherModel _teacherModel)
-        //{
-
-        //    try
-        //    {
-        //        return true;
-        //    }
-        //    catch (Exception e) { throw e; }
-        //}
 
         public List<Assignment> AssignAssignment(List<AssignmentModel> assignments)
         {
@@ -80,11 +71,8 @@ namespace TaskManagement.Repository.Services.TeacherServices
 
         public List<TaskList> TeacherCompleteTask(int id)
         {
-
-
             try
             {
-
                 SqlParameter[] sqlParameters = new SqlParameter[]
                 {
                       new SqlParameter("@id",id)
