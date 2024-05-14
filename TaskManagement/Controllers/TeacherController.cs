@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using TaskManagement.CustomFilter;
-using TaskManagement.Helper.Helper.StudentHelper;
 using TaskManagement.Helper.Session;
 using TaskManagement.Models.DBContext;
 using TaskManagement.Models.ViewModel;
@@ -42,13 +39,23 @@ namespace TaskManagement.Controllers
             return View();
         }
 
-        public ActionResult CreateTask()
+        public ActionResult CreateTask(int id)
         {
-            //Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
-            //ViewBag.teacherId = _teachers.TeacherID;
-            return View();
+            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
+            ViewBag.teacherId = _teachers.TeacherID;
+
+            List<Tasks> tasks = _context.Tasks.Where(m => m.CreatorID == _teachers.TeacherID).ToList();
+            List<TaskModel> _taskList = _task.ConvertTaskToTaskModel(tasks);
+            ViewBag.AllTask = _taskList;
+            Session["AllTask"] = _taskList;
+
+            List<StudentModel> _studentList = _task.NotAsignTask(id);
+            Session["AllStudent"] = _studentList;
+            ViewBag.AllStudent = _studentList;
+            return View(ViewBag.AllTask);
         }
         [HttpPost]
+       
         public ActionResult CreateTask(TaskModel _taskModel)
         {
             if (ModelState.IsValid)
@@ -60,22 +67,6 @@ namespace TaskManagement.Controllers
             {
                 return View();
             }
-        }
-
-        public ActionResult AsignTask()
-        {
-            List<Students> _students = _context.Students.ToList();
-            List<StudentModel> _studentModelList = StudentHelper.ConvertStudentListToStudentModelList(_students);
-            //ViewBag.AllStudent = _studentModelList;
-            Session["AllTask"] = _studentModelList;
-
-            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
-
-            List<Tasks> tasks = _context.Tasks.Where(m => m.CreatorID == _teachers.TeacherID).ToList();
-            List<TaskModel> _taskList = _task.ConvertTaskToTaskModel(tasks);
-            ViewBag.AllTask = _taskList;
-
-            return View();
         }
 
         [HttpPost]
@@ -140,10 +131,32 @@ namespace TaskManagement.Controllers
             List<TaskList> _TotalTask = _teacherinterface.TotalAssignTask(_teachers.TeacherID);
             return View(_TotalTask);
         }
-    
+
         public ActionResult DeleteTask(int id)
         {
-            return View();
+            if (_teacherinterface.DeleteTask(id))
+            {
+                TempData["deleteTask"] = "Task Delete successfully";
+            }
+            else
+            {
+                TempData["notdeleteTask"] = "Task already assign to student so can't delete";
+            }
+            return RedirectToAction("TotalCreateTask");
+        }
+
+        public ActionResult AssignTasks(int id)
+        {
+
+            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
+
+            List<Tasks> tasks = _context.Tasks.Where(m => m.CreatorID == _teachers.TeacherID).ToList();
+            List<TaskModel> _taskList = _task.ConvertTaskToTaskModel(tasks);
+            ViewBag.AllTask = _taskList;
+            List<StudentModel> _studentList = _task.NotAsignTask(id);
+            Session["AllTask"] = _studentList;
+            ViewBag.AllStudent = _studentList;
+            return PartialView("AssinTasks", _studentList);
         }
     }
 }

@@ -171,7 +171,6 @@ namespace TaskManagement.Repository.Services.TaskServices
 
             try
             {
-                int _totaltask;
 
                 SqlParameter[] sqlParameters = new SqlParameter[]
                 {
@@ -185,6 +184,19 @@ namespace TaskManagement.Repository.Services.TaskServices
             {
                 throw e;
             }
+        }
+
+        public List<StudentModel> NotAsignTask(int id)
+        {
+
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                      new SqlParameter("@id",id)
+            };
+
+            List<StudentModel> _students = _context.Database.SqlQuery<StudentModel>("exec GetStudentByTaskNotAssign @id", sqlParameters).ToList();
+
+            return _students;
         }
     }
 }

@@ -10603,7 +10603,6 @@
     <Content Include="Views\Teacher\Teacher.cshtml" />
     <Content Include="Views\Student\Student.cshtml" />
     <Content Include="Views\Teacher\CreateTask.cshtml" />
-    <Content Include="Views\Teacher\AsignTask.cshtml" />
     <Content Include="Views\Student\ShowTask.cshtml" />
     <Content Include="Views\Student\ShowTotalComplete.cshtml" />
     <Content Include="Views\Student\ShowPending.cshtml" />
@@ -10611,6 +10610,7 @@
     <Content Include="Views\Teacher\TotalCompleteTask.cshtml" />
     <Content Include="Views\Teacher\TotalPendingTask.cshtml" />
     <Content Include="Views\Teacher\TotalAssignTask.cshtml" />
+    <Content Include="Views\Teacher\AssignTasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

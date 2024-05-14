@@ -139,5 +139,31 @@ namespace TaskManagement.Helper.Helper.StudentHelper
 
             return _RegisterDetailsModel;
         }
+
+        public static Students ConvertLoginModelToStudentContext(LoginModel _RegisterDetailsModel)
+        {
+            Students _students = new Students();
+
+            if (_RegisterDetailsModel != null)
+            {
+
+                _students.Username = _RegisterDetailsModel.Username;                
+                _students.Password = _RegisterDetailsModel.Password;
+            }
+
+            return _students;
+        }
+        public static LoginModel ConvertStudentContextToLoginModel(Students _students)
+        {
+            LoginModel _RegisterDetailsModel = new LoginModel();
+
+            if (_students != null)
+            {
+                _RegisterDetailsModel.Username = _students.Username;
+                _RegisterDetailsModel.Password = _students.Password;
+            }
+
+            return _RegisterDetailsModel;
+        }
     }
 }

@@ -120,6 +120,34 @@ namespace TaskManagement.Helper.Helper.TeacherHelper
 
             return _RegisterDetailsModel;
         }
+
+        public static Teachers ConvertLoginModelToTeacherContext(LoginModel _RegisterDetailsModel)
+
+        {
+            Teachers _teachers = new Teachers();
+
+            if (_RegisterDetailsModel != null)
+            {
+                _teachers.Username = _RegisterDetailsModel.Username;
+                _teachers.Password = _RegisterDetailsModel.Password;
+            }
+
+            return _teachers;
+        }
+        public static LoginModel ConvertContextToLoginModel(Teachers _teachers)
+        {
+            LoginModel _RegisterDetailsModel = new LoginModel();
+
+            if (_teachers != null)
+            {
+
+                _RegisterDetailsModel.Username = _teachers.Username;
+                _RegisterDetailsModel.Password = _teachers.Password;
+            }
+
+            return _RegisterDetailsModel;
+        }
+
         public static Assignment ConvertAssigmentModelToAssignmentUSingObj(AssignmentModel user)
         {
             Assignment _AssignmentModel = new Assignment();

@@ -75,19 +75,18 @@ namespace TaskManagement.Repository.Services
         public List<RegisterDetailsModel> GetCity()
         {
             List<RegisterDetailsModel> _city = new List<RegisterDetailsModel>();
-            //States _state = StateHelper.ConvertContextToModel(_city);
 
             return _city;
         }
 
-        public bool CheckUserLogin(RegisterDetailsModel _login)
+        public bool CheckUserLogin(LoginModel _login)
         {
             try
             {
                 if (_login.UserRole == "Teacher")
                 {
                     Teachers _teachers = new Teachers();
-                    _teachers = TeacherHelper.ConvertRegisterDetailsModelToTeacherContext(_login);
+                    _teachers = TeacherHelper.ConvertLoginModelToTeacherContext(_login);
                     _teachers = _context.Teachers.Where(x => x.Username == _login.Username && x.Password == _login.Password).FirstOrDefault();
                     if (_teachers != null)
                     {
@@ -97,7 +96,7 @@ namespace TaskManagement.Repository.Services
                 else if (_login.UserRole == "Student")
                 {
                     Students _students = new Students();
-                    _students = StudentHelper.ConvertRegisterModelToStudentContext(_login);
+                    _students = StudentHelper.ConvertLoginModelToStudentContext(_login);
                     _students = _context.Students.Where(x => x.Username == _login.Username && x.Password == _login.Password).FirstOrDefault();
 
                     if (_students != null)

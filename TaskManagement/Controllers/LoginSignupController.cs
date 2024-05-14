@@ -43,46 +43,55 @@ namespace TaskManagement.Controllers.LoginSignup
         }
 
         [HttpPost]
-        public ActionResult Login([Bind(Include = "UserRole ,UserName , Password")] RegisterDetailsModel loginDetails)
+        public ActionResult Login( LoginModel loginDetails)
         {
-            if (_registerData.CheckUserLogin(loginDetails))
+            if (ModelState.IsValid)
             {
-                if (loginDetails.UserRole == "Teacher")
+                if (_registerData.CheckUserLogin(loginDetails))
                 {
-                    Teachers _teacher = _context.Teachers.FirstOrDefault(m => m.Username == loginDetails.Username);
-                    LoginSession.LoginUser = loginDetails.Username;
-                    LoginSession.UserRole = loginDetails.UserRole;
-                    ViewBag.username = loginDetails.Username;
-                    string name= loginDetails.Username;
-                    Session["Teachername"]= LoginSession.LoginUser;
-                    
-                    TempData["SuccessLogin"] = "Login SuccessFully";
-                    return RedirectToAction("Teacher", "Teacher");
-                }
-                else if (loginDetails.UserRole == "Student")
-                {
-                    Students _student = _context.Students.FirstOrDefault(m => m.Username == loginDetails.Username);
-                    LoginSession.LoginUser = loginDetails.Username;
-                    LoginSession.UserRole = loginDetails.UserRole;
-                    ViewBag.username = loginDetails.Username;
-                    Session["username"] = LoginSession.LoginUser;
-                    
-                    TempData["SuccessLogin"] = "Login SuccessFully";
-                    return RedirectToAction("Student", "Student");
+                    if (loginDetails.UserRole == "Teacher")
+                    {
+                        Teachers _teacher = _context.Teachers.FirstOrDefault(m => m.Username == loginDetails.Username);
+                        LoginSession.LoginUser = loginDetails.Username;
+                        LoginSession.UserRole = loginDetails.UserRole;
+                        ViewBag.username = loginDetails.Username;
+                        string name = loginDetails.Username;
+                        Session["Teachername"] = LoginSession.LoginUser;
+
+                        TempData["SuccessLogin"] = "Login SuccessFully";
+                        return RedirectToAction("Teacher", "Teacher");
+                    }
+                    else if (loginDetails.UserRole == "Student")
+                    {
+                        Students _student = _context.Students.FirstOrDefault(m => m.Username == loginDetails.Username);
+                        LoginSession.LoginUser = loginDetails.Username;
+                        LoginSession.UserRole = loginDetails.UserRole;
+                        ViewBag.username = loginDetails.Username;
+                        Session["username"] = LoginSession.LoginUser;
+
+                        TempData["SuccessLogin"] = "Login SuccessFully";
+                        return RedirectToAction("Student", "Student");
+                    }
+                    else
+                    {
+                        TempData["selectRole"] = "Select Role";
+                        return View();
+                    }
                 }
                 else
                 {
-                    TempData["selectRole"] = "Select Role";
+                    TempData["LoginFail"] = "Invalid Email or Password";
                     return View();
                 }
             }
+
             else
             {
-                TempData["LoginFail"] = "Invalid Email or Password";
+                //TempData["LoginFail"] = "Invalid Email or Password";
                 return View();
             }
         }
-       
+
         public ActionResult RegistrationPage()
         {
             ViewBag.States = _state.stateModelList();
@@ -109,9 +118,9 @@ namespace TaskManagement.Controllers.LoginSignup
                     return View();
                 }
             }
-                ViewBag.States = _state.stateModelList();
-                return View();
-          
+            ViewBag.States = _state.stateModelList();
+            return View();
+
         }
 
         public JsonResult CitiesByState(int id)

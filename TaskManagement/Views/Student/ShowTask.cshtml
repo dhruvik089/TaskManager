@@ -1,80 +1,187 @@
 ﻿@model  List<TaskManagement.Models.ViewModel.AssignmentList>
 
+<!--*******************
+    Preloader start
+********************-->
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+        </svg>
+    </div>
+</div>
+<!--*******************
+    Preloader end
+********************-->
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
 
-<div class="container">
-    <h2 class="text-center">TaskView</h2>
-    <table class="table">
-        <tr>
-            <th>
-                @*@Html.DisplayNameFor(model => model.TaskID)*@
-                TaskID
+    <!--**********************************
+        Nav header start
+    ***********************************-->
+    <div class="nav-header">
+        <div class="brand-logo">
+            <a href="index.html">
+                <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
+                <div class="brand-title" />
+                <img src="~/Content/Theme/TeacherDashBoard/images/logo-text.png" />
+        </div>
+        </a>
+    </div>
+</div>
+<!--**********************************
+    Nav header end
+***********************************-->
+<!--**********************************
+    Header start
+***********************************-->
+<div class="header">
+    <div class="header-content clearfix">
 
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.Tasks.TaskName)*@
-                TaskName
+        <div class="nav-control">
+            <div class="hamburger">
+                <span class="toggle-icon"><i class="icon-menu"></i></span>
+            </div>
+        </div>
+       
+        <div class="header-right">
 
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.Tasks.Description)*@
-                Description
+            <div class="d-flex">
+                <h4 class="mt-3">
+                    @Session["username"]
+                </h4>
+                <button class="btn">
 
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.Tasks.Deadline)*@
-                Deadline
-            </th>
-            <th>
-                Action
-            </th>
-            <th></th>
-        </tr>
+                    @Html.ActionLink("Log Out", "Login", controllerName: "LoginSignup")
+                </button>
+            </div>
 
-        @foreach (var item in Model)
-        {
+        </div>
+    </div>
+</div>
+<!--**********************************
+    Header end ti-comment-alt
+***********************************-->
+<!--**********************************
+    Sidebar start
+***********************************-->
+<div class="nk-sidebar">
+    <div class="nk-nav-scroll">
+        <ul class="metismenu" id="menu">
+            <li class="nav-label">Dashboard</li>
+            <li>
+                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="icon-speedometer menu-icon"></i><span class="nav-text">Task</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>@Html.ActionLink("Show Task", "ShowTask")</li>
+                    <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--**********************************
+    Sidebar end
+***********************************-->
+<!--**********************************
+    Content body start
+***********************************-->
+<div class="content-body">
+
+
+    <div class="container">
+        <h2 class="text-center">TaskView</h2>
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AssignmentID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TaskName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Deadline)
-                </td>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.TaskID)*@
+                    TaskID
 
-                <td>
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Tasks.TaskName)*@
+                    TaskName
 
-                    @if (item.Deadline < DateTime.Now)
-                    {
-                        item.Task_complete = true;
-                        <div class="text-danger">You are late</div>
-                    }
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Tasks.Description)*@
+                    Description
 
-                    else
-                    {
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Tasks.Deadline)*@
+                    Deadline
+                </th>
+                <th>
+                    Action
+                </th>
+                <th></th>
+            </tr>
 
-                        if (item.Task_complete == false)
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AssignmentID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaskName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Deadline)
+                    </td>
+
+                    <td>
+
+                        @if (item.Deadline < DateTime.Now)
                         {
-                            <div><a class="text-danger" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div>
+                            item.Task_complete = true;
+                            <div class="text-danger">You are late</div>
                         }
+
                         else
                         {
-                            <div class="text-success">Completed</div>
+
+                            if (item.Task_complete == false)
+                            {
+                                <div><a class="text-danger" href="~/Student/SetAssignmentStatus?id=@item.AssignmentID">Please Submit</a></div>
+                            }
+                            else
+                            {
+                                <div class="text-success">Completed</div>
+                            }
                         }
-                    }
 
-                </td>
-            </tr>
-        }
+                    </td>
+                </tr>
+            }
 
-    </table>
+        </table>
 
-    <button class="btn btn-primary">
-        @Html.ActionLink("Home Page", "Student", "Student", htmlAttributes: new { @class="text-decoration-none"})
-    </button>
+        <button class="btn btn-primary">
+            @Html.ActionLink("Home Page", "Student", "Student", htmlAttributes: new { @class = "text-decoration-none" })
+        </button>
 
+    </div>
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
+<!--**********************************
+    Footer start
+***********************************-->
+<div class="footer">
+    <div class="copyright">
+        <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+    </div>
+</div>
+<!--**********************************
+    Footer end
+***********************************-->
 </div>

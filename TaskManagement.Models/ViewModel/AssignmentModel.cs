@@ -25,8 +25,7 @@ namespace TaskManagement.Models.ViewModel
         public string Description { get; set; }
         public bool Task_complete { get; set; }
         public DateTime Deadline { get; set; }
-        public string Username { get; set; }
-       
+        public string Username { get; set; }     
 
     }
 }

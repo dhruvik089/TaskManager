@@ -37,15 +37,15 @@ namespace TaskManagement.Repository.Services.TeacherServices
             catch (Exception e) { throw e; }
         }
 
-        public bool CheackTeacher(TeacherModel _teacherModel)
-        {
+        //public bool CheackTeacher(TeacherModel _teacherModel)
+        //{
 
-            try
-            {
-                return true;
-            }
-            catch (Exception e) { throw e; }
-        }
+        //    try
+        //    {
+        //        return true;
+        //    }
+        //    catch (Exception e) { throw e; }
+        //}
 
         public List<Assignment> AssignAssignment(List<AssignmentModel> assignments)
         {
@@ -119,8 +119,6 @@ namespace TaskManagement.Repository.Services.TeacherServices
         {
             try
             {
-                int _totaltask;
-
                 SqlParameter[] sqlParameters = new SqlParameter[]
                 {
                       new SqlParameter("@id",id)
@@ -132,6 +130,26 @@ namespace TaskManagement.Repository.Services.TeacherServices
             {
                 throw e;
             }
+        }
+
+        public bool DeleteTask(int id)
+        {
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@id",id)
+            };
+
+           int a=  _registerTeacher.Database.SqlQuery<TaskList>("exec DeleteTask @id", sqlParameters).ToList().Count();
+
+            if (a == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+          
         }
     }
 }

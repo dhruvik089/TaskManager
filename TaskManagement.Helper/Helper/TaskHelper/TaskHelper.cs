@@ -23,7 +23,7 @@ namespace TaskManagement.Helper.Helper.TaskHelper
                         _task.TaskName = tasks.TaskName;
                         _task.Description = tasks.Description;
                         _task.Deadline = tasks.Deadline;
-                        _task.CreatorID = tasks.CreatorID;
+                        //_task.CreatorID = tasks.CreatorID;
                         //_task.Assignment = tasks.Assignment;
                         //_task.Teachers = tasks.Teachers;
 

@@ -13,7 +13,6 @@ namespace TaskManagement.Repository.Interface.IRegisterInterface
 
         bool AddUser(RegisterDetailsModel _registerDetailsModel);
         List<RegisterDetailsModel> GetCity();
-        //List<RegisterDetailsModel> GetState();
-        bool CheckUserLogin(RegisterDetailsModel _login);
+        bool CheckUserLogin(LoginModel _login);
     }
 }

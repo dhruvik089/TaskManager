@@ -19,6 +19,7 @@ namespace TaskManagement.Repository.Interface.ITaskInterface
         List<AssignmentList> CompleteTask(int id);
         List<AssignmentList> PendingTask(int id);
 
+        List<StudentModel> NotAsignTask(int id);
 
     }
 }

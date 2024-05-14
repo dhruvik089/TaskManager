@@ -26,12 +26,13 @@
                     <form method="post">
 
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Select role</label>
-                            <select class="form-control" name="UserRole" id="Role" required>
-                                <option selected hidden>--Select Role--</option>
+                            <label for="UserRole">Select role</label>
+                            <select class="form-control" name="UserRole" id="Role" >
+                                <option selected value="">--Select Role--</option>
                                 <option value="Student">Student</option>
                                 <option value="Teacher">Teacher</option>
                             </select>
+                            @Html.ValidationMessageFor(m => m.UserRole, "", htmlAttributes: new { @class = "text-danger" })
                         </div>
                         <div class="row ">
                             <div class="form-group mb-3 col-lg-4">
@@ -58,15 +59,14 @@
                         <div class="row">
                             <div class="form-group mb-3 col-lg-4">
                                 <label class="label" for="contact">Contact</label>
-                                @*<input type="number" min="0" class="form-control" placeholder="Password" required>*@
                                 @Html.TextBoxFor(m => m.ContactNumber, htmlAttributes: new { @class = "form-control", type = "number", min = "0" })
                                 @Html.ValidationMessageFor(m => m.ContactNumber, "", htmlAttributes: new { @class = "text-danger" })
                             </div>
 
                             <div class="form-group col-lg-4">
-                                <label for="exampleFormControlSelect1">State</label>
+                                <label for="StateId">State</label>
                                 <select name="StateId" id="StateId" class="form-control" aria-label="Default select example">
-                                    <option value="Select" class="form-select" selected>Select State</option>
+                                    <option value="" class="form-select" >Select State</option>
                                     @if (ViewBag.States != null)
 
                                     {
@@ -77,45 +77,33 @@
                                     }
 
                                 </select>
+                                @Html.ValidationMessageFor(m => m.StateID, "", htmlAttributes: new { @class = "text-danger" })
                             </div>
                             <div class=" form-group col-lg-4">
                                 <label for="exampleFormControlSelect1">City</label>
                                 <select name="CityId" id="CityID" class="form-control" class="form-select" aria-label="Default select example">
-                                    <option value="1" selected>Select City</option>
+                                    <option value="" class="form-select">@*Select City*@</option>
                                 </select>
+                                @Html.ValidationMessageFor(m => m.CityID, "", htmlAttributes: new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group mb-3">
                             <label for="address">Address</label>
                             @Html.TextAreaFor(m => m.Address, htmlAttributes: new { @class = "form-control" })
+
+                            @Html.ValidationMessageFor(m => m.Address, "", htmlAttributes: new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
                             <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
                         </div>
 
-                        <div class="form-group d-md-flex">
-                            <div class="w-50 text-left">
-                                <label class="checkbox-wrap checkbox-primary mb-0">
-                                    Remember Me
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="w-50 text-md-right">
-                                <a href="#">Forgot Password</a>
-                            </div>
-                        </div>
+                        
                     </form>
 
 
 
-                    <div class="w-100">
-                        <p class="social-media d-flex justify-content-end">
-                            <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
-                            <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
-                        </p>
-                    </div>
+                    
                     <p class="text-center">Already member? @Html.ActionLink("Login", "Login")</p>
 
 
