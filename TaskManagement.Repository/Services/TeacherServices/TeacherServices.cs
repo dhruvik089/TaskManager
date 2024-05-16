@@ -127,7 +127,7 @@ namespace TaskManagement.Repository.Services.TeacherServices
                 new SqlParameter("@id",id)
             };
 
-           int a=  _registerTeacher.Database.SqlQuery<TaskList>("exec DeleteTask @id", sqlParameters).ToList().Count();
+            int a = _registerTeacher.Database.SqlQuery<TaskList>("exec DeleteTask @id", sqlParameters).ToList().Count();
 
             if (a == 0)
             {
@@ -137,7 +137,25 @@ namespace TaskManagement.Repository.Services.TeacherServices
             {
                 return false;
             }
-          
+
+        }
+
+        public List<TaskList> TotalExpiredTask(int id)
+        {
+            try
+            {
+                SqlParameter[] _sqlParameters = new SqlParameter[]
+                {
+                    new SqlParameter("@id",id)
+                };
+
+                List<TaskList> _taskList = _registerTeacher.Database.SqlQuery<TaskList>("exec TeacherExpiredTask @id", _sqlParameters).ToList();
+                return _taskList;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

@@ -27,21 +27,26 @@ namespace TaskManagement.Controllers
             ViewBag.TotalTask = _task.TotalTask(studentId).Count();
             ViewBag.TotalCompeteTask = _task.CompleteTask(studentId).Count();
             ViewBag.TotalPendingTask = _task.PendingTask(studentId).Count();
-
-            //Session["TotalTask"] = _task.TotalTask(studentId);
-            //Session["TotalCompeteTask"] = _task.CompleteTask(studentId);
-            //Session["TotalPendingTask"] = _task.PendingTask(studentId);
+            ViewBag.TotalExpiredTask = _task.ExpiredTask(studentId).Count();
 
             return View();
         }
 
-        public ActionResult ShowTask()
+        public ActionResult ShowTask(int? pageNumber)
         {
             string username = LoginSession.LoginUser;
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
             List<AssignmentList> _assignments = _task.GetAssignmentTasks(studentId);
 
-            return View(_assignments);
+            int page = pageNumber ?? 1;
+            var PaginationList = Pager<AssignmentList>.Pagination(_assignments, page);
+
+            ViewBag.totalCount = Pager<AssignmentList>.totalCount;
+            ViewBag.page = Pager<AssignmentList>.page;
+            ViewBag.pageSize = Pager<AssignmentList>.pageSize;
+            ViewBag.totalPage = Pager<AssignmentList>.totalPage;
+
+            return View(PaginationList);
         }
 
         public ActionResult SetAssignmentStatus(int id)
@@ -62,20 +67,55 @@ namespace TaskManagement.Controllers
             return RedirectToAction("Login");
         }
 
-        public ActionResult ShowTotalComplete()
+        public ActionResult ShowTotalComplete(int? pageNumber)
         {
             string username = LoginSession.LoginUser;
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
-            List<AssignmentList> _completeTask=_task.CompleteTask(studentId);
-            return View(_completeTask);
+            List<AssignmentList> _assignments = _task.CompleteTask(studentId);
+
+            int page = pageNumber ?? 1;
+            var PaginationList = Pager<AssignmentList>.Pagination(_assignments, page);
+
+            ViewBag.totalCount = Pager<AssignmentList>.totalCount;
+            ViewBag.page = Pager<AssignmentList>.page;
+            ViewBag.pageSize = Pager<AssignmentList>.pageSize;
+            ViewBag.totalPage = Pager<AssignmentList>.totalPage;
+
+            return View(PaginationList);
         }
 
-        public ActionResult ShowPending()
+        public ActionResult ShowPending(int? pageNumber)
         {
             string username = LoginSession.LoginUser;
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
-            List<AssignmentList> _pendingtask = _task.PendingTask(studentId);
-            return View(_pendingtask);
+            List<AssignmentList> _assignments = _task.PendingTask(studentId);
+
+            int page = pageNumber ?? 1;
+            var PaginationList = Pager<AssignmentList>.Pagination(_assignments, page);
+
+            ViewBag.totalCount = Pager<AssignmentList>.totalCount;
+            ViewBag.page = Pager<AssignmentList>.page;
+            ViewBag.pageSize = Pager<AssignmentList>.pageSize;
+            ViewBag.totalPage = Pager<AssignmentList>.totalPage;
+
+            return View(PaginationList);
+        }
+
+        public ActionResult ShowExpired(int? pageNumber)
+        {
+            string username = LoginSession.LoginUser;
+            int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
+            List<AssignmentList> _assignments = _task.ExpiredTask(studentId);
+
+            int page = pageNumber ?? 1;
+            var PaginationList = Pager<AssignmentList>.Pagination(_assignments, page);
+
+            ViewBag.totalCount = Pager<AssignmentList>.totalCount;
+            ViewBag.page = Pager<AssignmentList>.page;
+            ViewBag.pageSize = Pager<AssignmentList>.pageSize;
+            ViewBag.totalPage = Pager<AssignmentList>.totalPage;
+
+            return View(PaginationList);
         }
     }
 }

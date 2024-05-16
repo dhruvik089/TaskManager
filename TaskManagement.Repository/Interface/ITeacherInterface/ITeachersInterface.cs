@@ -18,6 +18,7 @@ namespace TaskManagement.Repository.Interface.ITeacherInterface
         List<TaskList> TeacherCompleteTask(int id);
         List<TaskList> TotalCreatTask(int id);
         List<TaskList> TotalAssignTask(int id);
+        List<TaskList> TotalExpiredTask(int id);
 
         bool DeleteTask(int id);
 

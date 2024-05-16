@@ -10612,6 +10612,8 @@
     <Content Include="Views\Teacher\TotalPendingTask.cshtml" />
     <Content Include="Views\Teacher\TotalAssignTask.cshtml" />
     <Content Include="Views\Teacher\AssignTasks.cshtml" />
+    <Content Include="Views\Student\ShowExpired.cshtml" />
+    <Content Include="Views\Teacher\TotalExpiredTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

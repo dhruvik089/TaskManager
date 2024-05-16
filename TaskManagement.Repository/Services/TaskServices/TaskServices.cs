@@ -130,7 +130,6 @@ namespace TaskManagement.Repository.Services.TaskServices
         {
             try
             {
-                int _totaltask;
 
                 SqlParameter[] sqlParameters = new SqlParameter[]
                 {
@@ -156,8 +155,8 @@ namespace TaskManagement.Repository.Services.TaskServices
                 {
                       new SqlParameter("@id",id)
                 };
-               
-                 List<AssignmentList> assignmentLists= _context.Database.SqlQuery<AssignmentList>("exec totalCompleteTask @id", sqlParameters).ToList();
+
+                List<AssignmentList> assignmentLists = _context.Database.SqlQuery<AssignmentList>("exec totalCompleteTask @id", sqlParameters).ToList();
                 return assignmentLists;
             }
             catch (Exception e)
@@ -188,15 +187,39 @@ namespace TaskManagement.Repository.Services.TaskServices
 
         public List<StudentModel> NotAsignTask(int id)
         {
-
-            SqlParameter[] sqlParameters = new SqlParameter[]
+            try
             {
+
+                SqlParameter[] sqlParameters = new SqlParameter[]
+                {
                       new SqlParameter("@id",id)
-            };
+                };
 
-            List<StudentModel> _students = _context.Database.SqlQuery<StudentModel>("exec GetStudentByTaskNotAssign @id", sqlParameters).ToList();
+                List<StudentModel> _students = _context.Database.SqlQuery<StudentModel>("exec GetStudentByTaskNotAssign @id", sqlParameters).ToList();
 
-            return _students;
+                return _students;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<AssignmentList> ExpiredTask(int id)
+        {
+            try
+            {
+                SqlParameter[] sqlParameters = new SqlParameter[]
+                {
+                    new SqlParameter("@id",id)
+                };
+                List<AssignmentList> _assignmentLists = _context.Database.SqlQuery<AssignmentList>("exec StudentExpiredTask @id", sqlParameters).ToList();
+                return _assignmentLists;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

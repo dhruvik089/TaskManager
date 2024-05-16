@@ -35,6 +35,7 @@ namespace TaskManagement.Controllers
             ViewBag.CompleteTask = _teacherinterface.TeacherCompleteTask(_teachers.TeacherID).Count();
             ViewBag.TotalTask = _teacherinterface.TotalCreatTask(_teachers.TeacherID).Count();
             ViewBag.TotalAssignTask = _teacherinterface.TotalAssignTask(_teachers.TeacherID).Count();
+            ViewBag.TotalExpiredTask = _teacherinterface.TotalExpiredTask(_teachers.TeacherID).Count();
 
             return View();
         }
@@ -44,23 +45,16 @@ namespace TaskManagement.Controllers
             Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
             ViewBag.teacherId = _teachers.TeacherID;
 
-            //List<Tasks> tasks = _context.Tasks.Where(m => m.CreatorID == _teachers.TeacherID).ToList();
-            //List<TaskModel> _taskList = _task.ConvertTaskToTaskModel(tasks);
-            //ViewBag.AllTask = _taskList;
-            //Session["AllTask"] = _taskList;
-
-            //List<StudentModel> _studentList = _task.NotAsignTask(id);
-            //Session["AllStudent"] = _studentList;
-            //ViewBag.AllStudent = _studentList;
             return View();
         }
         [HttpPost]
-       
-        public ActionResult CreateTask(TaskModel _taskModel)
+
+        public ActionResult CreateTask(TaskModel _taskModel, int TaskID)
         {
             if (ModelState.IsValid)
             {
                 _task.AddTask(_taskModel);
+                Session["TaskID"] = TaskID;
                 return RedirectToAction("Teacher");
             }
             else
@@ -69,8 +63,24 @@ namespace TaskManagement.Controllers
             }
         }
 
+
+        public ActionResult AssignTasks(int id)
+        {
+
+            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
+            ViewBag.TaskID = id;
+            Session["TaskID"] = id;
+            List<Tasks> tasks = _context.Tasks.Where(m => m.CreatorID == _teachers.TeacherID).ToList();
+            List<TaskModel> _taskList = _task.ConvertTaskToTaskModel(tasks);
+            ViewBag.AllTask = _taskList;
+            List<StudentModel> _studentList = _task.NotAsignTask(id);
+            Session["AllTask"] = _studentList;
+            ViewBag.AllStudent = _studentList;
+            return PartialView("AssignTasks", _studentList);
+        }
+
         [HttpPost]
-        public ActionResult AsignTask(int TaskID, List<int> StudentID)
+        public ActionResult AssignTasks(List<int> StudentID)
         {
             try
             {
@@ -82,7 +92,7 @@ namespace TaskManagement.Controllers
                     {
                         AssignmentModel assignment = new AssignmentModel
                         {
-                            TaskID = TaskID,
+                            TaskID = (int?)Session["TaskID"],
                             StudentID = studentId
                         };
                         assignments.Add(assignment);
@@ -106,31 +116,85 @@ namespace TaskManagement.Controllers
             return RedirectToAction("Login");
         }
 
-        public ActionResult TotalCreateTask()
+        public ActionResult TotalCreateTask(int? pageNumber)
         {
             Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
             List<TaskList> _TotalTask = _teacherinterface.TotalCreatTask(_teachers.TeacherID);
+
+            int page = pageNumber ?? 1;
+            var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
+
+            ViewBag.totalCount = Pager<TaskList>.totalCount;
+            ViewBag.page = Pager<TaskList>.page;
+            ViewBag.pageSize = Pager<TaskList>.pageSize;
+            ViewBag.totalPage = Pager<TaskList>.totalPage;
+
             return View(_TotalTask);
         }
 
-        public ActionResult TotalCompleteTask()
+        public ActionResult TotalCompleteTask(int? pageNumber)
         {
             Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
             List<TaskList> _TotalTask = _teacherinterface.TeacherCompleteTask(_teachers.TeacherID);
-            return View(_TotalTask);
+
+            int page = pageNumber ?? 1;
+            var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
+
+            ViewBag.totalCount = Pager<TaskList>.totalCount;
+            ViewBag.page = Pager<TaskList>.page;
+            ViewBag.pageSize = Pager<TaskList>.pageSize;
+            ViewBag.totalPage = Pager<TaskList>.totalPage;
+
+            return View(PaginationList);
         }
 
-        public ActionResult TotalPendingTask()
+        public ActionResult TotalPendingTask(int? pageNumber)
         {
             Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
             List<TaskList> _TotalTask = _teacherinterface.TeacherPendingTask(_teachers.TeacherID);
+
+
+            int page = pageNumber ?? 1;
+            var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
+
+            ViewBag.totalCount = Pager<TaskList>.totalCount;
+            ViewBag.page = Pager<TaskList>.page;
+            ViewBag.pageSize = Pager<TaskList>.pageSize;
+            ViewBag.totalPage = Pager<TaskList>.totalPage;
+
             return View(_TotalTask);
         }
 
-        public ActionResult TotalAssignTask()
+        public ActionResult TotalAssignTask(int? pageNumber)
         {
             Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
             List<TaskList> _TotalTask = _teacherinterface.TotalAssignTask(_teachers.TeacherID);
+
+
+            int page = pageNumber ?? 1;
+            var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
+
+            ViewBag.totalCount = Pager<TaskList>.totalCount;
+            ViewBag.page = Pager<TaskList>.page;
+            ViewBag.pageSize = Pager<TaskList>.pageSize;
+            ViewBag.totalPage = Pager<TaskList>.totalPage;
+
+            return View(_TotalTask);
+        }
+        public ActionResult TotalExpiredTask(int? pageNumber)
+        {
+            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
+            List<TaskList> _TotalTask = _teacherinterface.TotalExpiredTask(_teachers.TeacherID);
+
+
+            int page = pageNumber ?? 1;
+            var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
+
+            ViewBag.totalCount = Pager<TaskList>.totalCount;
+            ViewBag.page = Pager<TaskList>.page;
+            ViewBag.pageSize = Pager<TaskList>.pageSize;
+            ViewBag.totalPage = Pager<TaskList>.totalPage;
+
             return View(_TotalTask);
         }
 
@@ -145,20 +209,6 @@ namespace TaskManagement.Controllers
                 TempData["notdeleteTask"] = "Task already assign to student so can't delete";
             }
             return RedirectToAction("TotalCreateTask");
-        }
-
-        public ActionResult AssignTasks(int id)
-        {
-
-            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
-
-            List<Tasks> tasks = _context.Tasks.Where(m => m.CreatorID == _teachers.TeacherID).ToList();
-            List<TaskModel> _taskList = _task.ConvertTaskToTaskModel(tasks);
-            ViewBag.AllTask = _taskList;
-            List<StudentModel> _studentList = _task.NotAsignTask(id);
-            Session["AllTask"] = _studentList;
-            ViewBag.AllStudent = _studentList;
-            return PartialView("AssignTasks", _studentList);
         }
     }
 }

@@ -13,9 +13,7 @@
     </script>
 }
 
-<!--*******************
-    Preloader start
-********************-->
+
 <div id="preloader">
     <div class="loader">
         <svg class="circular" viewBox="25 25 50 50">
@@ -23,17 +21,10 @@
         </svg>
     </div>
 </div>
-<!--*******************
-    Preloader end
-********************-->
-<!--**********************************
-    Main wrapper start
-***********************************-->
+
 <div id="main-wrapper">
 
-    <!--**********************************
-        Nav header start
-    ***********************************-->
+
     <div class="nav-header">
         <div class="brand-logo">
             <a href="index.html">
@@ -44,12 +35,7 @@
         </a>
     </div>
 </div>
-<!--**********************************
-    Nav header end
-***********************************-->
-<!--**********************************
-    Header start
-***********************************-->
+
 <div class="header">
     <div class="header-content clearfix">
 
@@ -75,12 +61,7 @@
         </div>
     </div>
 </div>
-<!--**********************************
-    Header end ti-comment-alt
-***********************************-->
-<!--**********************************
-    Sidebar start
-***********************************-->
+
 <div class="nk-sidebar">
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
@@ -91,16 +72,12 @@
                 </a>
                 <ul aria-expanded="false">
                     <li>@Html.ActionLink("Create Task", "CreateTask")</li>
-                    <li>@Html.ActionLink("Assign Task", "AsignTask")</li>
-                    <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+              
                 </ul>
             </li>
         </ul>
     </div>
 </div>
-<!--**********************************
-    Sidebar end
-***********************************-->
 
 <div class="content-body">
     <div class="container">
@@ -116,20 +93,16 @@
                     <div class="modal-body" id="popupContent">
 
                     </div>
-                    @*<div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>*@
+                
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-5">
             <h3 class="text-center col-10">All Create Task </h3>
-            @*<button class="col-2 btn btn-primary">*@
+         
             @Html.ActionLink("Add task", "CreateTask", "Teacher", htmlAttributes: new { @class = "col-2 btn btn-primary text-decoration-none text-white" })
-            @*</button>*@
+          
         </div>
-
 
         <table class="table">
             <thead>
@@ -150,47 +123,37 @@
                         <td>@item.TaskName</td>
                         <td>@item.Description</td>
                         <td>@item.Deadline</td>
-                        <td>
-                            @*@Html.ActionLink("Assign Task", "AsignTask", "Teacher", new { id = @item.TaskID, data-toggle = "modal", data-target = "#myModal", @class = "text-decoration-none text-white btn btn-danger" }, null)*@
-                            <button id="@item.TaskID" class="assignTask btn btn-info" value="@item.TaskID">
-                                Assign Task
+                        <td>                         
+                            <button id="@item.TaskID" class="assignTask btn btn-info " value="@item.TaskID" new { TaskID = @item.TaskID}, >
+                                Assign Task                                
                             </button>
                         </td>
                         <td>
-                            @*<button class="btn btn-info">Edit</button>*@
-                            @*<button class="btn btn-danger">*@
-                            @Html.ActionLink("Delete", "DeleteTask", "Teacher", new { id = @item.TaskID, @class = "text-decoration-none text-white btn btn-danger" }, null)
-                            @*</button>*@
+                            @Html.ActionLink("Delete", "DeleteTask", "Teacher",  new { id = @item.TaskID}, htmlAttributes: new {@class = "text-decoration-none text-white btn btn-danger" })
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-
-        @*<button class="btn btn-primary">*@
         @Html.ActionLink("back to Home", "Teacher", "Teacher", htmlAttributes: new { @class = "btn btn-primary text-decoration-none text-white" })
-        @*</button>*@
+
     </div>
 
 
 </div>
-
-<!--**********************************
-      Footer start
-  ***********************************-->
+ 
 <div class="footer">
     <div class="copyright">
-        <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+        <p>Copyright &copy; Designed & Developed by <a href="https://growth.in">Task Management</a> 2022</p>
     </div>
 </div>
-<!--**********************************
-    Footer end
-***********************************-->
+
 
 <script>
     $(document).ready(function () {
         $('.assignTask').on('click', function () {
             var Valueescheck = $(this).val();
+            console.log(Valueescheck)
             $.ajax({
                 url: '/Teacher/AssignTasks?id=' + Valueescheck,
                 type: 'GET',
@@ -201,8 +164,8 @@
                     $('#popupContent').append(data);
                 }
             })
-            
+
         })
-        
+
     })
 </script>

@@ -79,7 +79,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li>@Html.ActionLink("Create Task", "CreateTask")</li>
-                    <li>@Html.ActionLink("Assign Task", "AsignTask")</li>
+                    @*<li>@Html.ActionLink("Assign Task", "AsignTask")</li>*@
                     <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                 </ul>
             </li>
@@ -94,7 +94,7 @@
     <div class="container">
         <h3 class="text-center">All Pendding Task</h3>
 
-        <table class="table">
+        <table class="table table-info">
             <thead>
                 <tr>
                     <th>TaskID</th>
@@ -117,10 +117,33 @@
                 }
             </tbody>
         </table>
+        <div class="d-flex justify-content-end">
+
+
+            @*@if (ViewBag.page > 1)
+            {
+
+                @Html.ActionLink("Previous", "TotalCompleteTask", "Teacher", new { pageNumber = ViewBag.page - 1 }, htmlAttributes: new { @class = "btn btn-info Previous" })
+            }*@
+
+            @for (int i = 1; i <= ViewBag.totalPage; i++)
+            {
+                @Html.ActionLink(@i.ToString(), "TotalCompleteTask", "Teacher", new { pageNumber = i }, htmlAttributes: new { @class = "btn btn-info mx-1 Previous" })
+            }
+
+            @*@if (ViewBag.page * ViewBag.pageSize < ViewBag.totalCount)
+            {
+                @Html.ActionLink("Next", "TotalCompleteTask", "Teacher", new { pageNumber = ViewBag.page + 1 }, htmlAttributes: new { @class = "btn btn-info mx-2 Next" })
+            }*@
+
+        </div>
 
         <button class="btn btn-primary">
             @Html.ActionLink("back to Home", "Teacher", "Teacher", htmlAttributes: new { @class = "text-decoration-none text-white" })
         </button>
+
+
+
     </div>
 </div>
 
