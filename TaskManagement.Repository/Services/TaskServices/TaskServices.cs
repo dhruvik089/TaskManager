@@ -68,23 +68,26 @@ namespace TaskManagement.Repository.Services.TaskServices
 
         public List<AssignmentList> GetAssignmentTasks(int id)
         {
+            List<AssignmentList> _text =new List<AssignmentList>();
 
-            try
-            {
-                List<Assignment> _tasks = new List<Assignment>();
+            //try
+            //{
+            //    List<Assignment> _tasks = new List<Assignment>();
 
-                SqlParameter[] _perameter = new SqlParameter[]
-                {
-                    new SqlParameter("@id",id)
-                };
-                List<AssignmentList> _taskView = _context.Database.SqlQuery<AssignmentList>("Exec ShowAssignment @id", _perameter).ToList();
+            //    SqlParameter[] _perameter = new SqlParameter[]
+            //    {
+            //        new SqlParameter("@id",id)
+            //    };
+            //    List<AssignmentList> _taskView = _context.Database.SqlQuery<AssignmentList>("Exec ShowAssignment @id", _perameter).ToList();
 
-                return _taskView;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            //    return _taskView;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+
+            return _text;
         }
 
         public bool AssignmentStatus(int id)
@@ -128,20 +131,22 @@ namespace TaskManagement.Repository.Services.TaskServices
 
         public List<AssignmentList> TotalTask(int id)
         {
-            try
-            {
+            List<AssignmentList> assignmentLists = new List<AssignmentList>();
+            //try
+            //{
 
-                SqlParameter[] sqlParameters = new SqlParameter[]
-                {
-                      new SqlParameter("@id",id)
-                };
-                List<AssignmentList> assignmentLists = _context.Database.SqlQuery<AssignmentList>("exec totalTask @id", sqlParameters).ToList();
-                return assignmentLists;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            //    SqlParameter[] sqlParameters = new SqlParameter[]
+            //    {
+            //          new SqlParameter("@id",id)
+            //    };
+            //    List<AssignmentList> assignmentLists = _context.Database.SqlQuery<AssignmentList>("exec totalTask @id", sqlParameters).ToList();
+            //    return assignmentLists;
+            //}
+            //catch (Exception e)
+            //{
+            //    throw e;
+            //}
+            return assignmentLists;
         }
 
         public List<AssignmentList> CompleteTask(int id)

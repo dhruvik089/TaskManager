@@ -128,7 +128,7 @@
 
             @for (int i = 1; i <= ViewBag.totalPage; i++)
             {
-                @Html.ActionLink(@i.ToString(), "TotalCompleteTask", "Teacher", new { pageNumber = i }, htmlAttributes: new { @class = "btn btn-info mx-1 Previous" })
+                @Html.ActionLink(@i.ToString(), "TotalPendingTask", "Teacher", new { pageNumber = i }, htmlAttributes: new { @class = "btn btn-info mx-1 Previous" })
             }
 
             @*@if (ViewBag.page * ViewBag.pageSize < ViewBag.totalCount)

@@ -17,16 +17,13 @@ namespace TaskManagement.Models.ViewModel
         public static List<T> Pagination(List<T> _list, int page)
         {
             
-            int pageSize = 1;
-
-            //ViewBag.demoListDetails = demoListDetails.GetDetialsList();
+            int pageSize = 2;
 
             int totalCount = _list.Count();
             int totalPage = (int)Math.Ceiling((decimal)totalCount / pageSize);
 
             var DetailsPerPage = _list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
-            //ViewBag.demoListDetails = DetailsPerPage;
+                        
             Pager<T>.totalCount = totalCount;
             Pager<T>.page = page;
             Pager<T>.pageSize = pageSize;

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using TaskManagement.Common;
 using TaskManagement.CustomFilter;
 using TaskManagement.Helper.Session;
 using TaskManagement.Models.DBContext;
@@ -27,15 +29,27 @@ namespace TaskManagement.Controllers
             _context = new TaskManagementEntities();
         }
 
-        public ActionResult Teacher()
+        public async Task<ActionResult> Teacher()
         {
             Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
 
-            ViewBag.PendingTask = _teacherinterface.TeacherPendingTask(_teachers.TeacherID).Count();
-            ViewBag.CompleteTask = _teacherinterface.TeacherCompleteTask(_teachers.TeacherID).Count();
-            ViewBag.TotalTask = _teacherinterface.TotalCreatTask(_teachers.TeacherID).Count();
-            ViewBag.TotalAssignTask = _teacherinterface.TotalAssignTask(_teachers.TeacherID).Count();
-            ViewBag.TotalExpiredTask = _teacherinterface.TotalExpiredTask(_teachers.TeacherID).Count();
+            List<TaskList> PendingTask = new List<TaskList>();
+            List<TaskList> CompleteTask = new List<TaskList>();
+            List<TaskList> TotalTask = new List<TaskList>();
+            List<TaskList> TotalAssignTask = new List<TaskList>();
+            List<TaskList> TotalExpiredTask = new List<TaskList>();
+
+            PendingTask = await WebApiHelper.TeacherCallApi(_teachers.TeacherID, "TotalPendingTask");
+            CompleteTask= await WebApiHelper.TeacherCallApi(_teachers.TeacherID, "TotalCompleteTask");
+            TotalTask = await WebApiHelper.TeacherCallApi(_teachers.TeacherID, "TotalCreateTask");
+            TotalAssignTask = await WebApiHelper.TeacherCallApi(_teachers.TeacherID, "TotalAssignTask");
+            TotalExpiredTask = await WebApiHelper.TeacherCallApi(_teachers.TeacherID, "TotalExpiredTask");
+
+            ViewBag.PendingTask = PendingTask.Count();
+            ViewBag.CompleteTask = CompleteTask.Count();
+            ViewBag.TotalTask = TotalTask.Count();
+            ViewBag.TotalAssignTask = TotalAssignTask.Count();
+            ViewBag.TotalExpiredTask = TotalExpiredTask.Count();
 
             return View();
         }
@@ -47,8 +61,8 @@ namespace TaskManagement.Controllers
 
             return View();
         }
-        [HttpPost]
 
+        [HttpPost]
         public ActionResult CreateTask(TaskModel _taskModel, int TaskID)
         {
             if (ModelState.IsValid)
@@ -62,7 +76,6 @@ namespace TaskManagement.Controllers
                 return View();
             }
         }
-
 
         public ActionResult AssignTasks(int id)
         {
@@ -116,26 +129,12 @@ namespace TaskManagement.Controllers
             return RedirectToAction("Login");
         }
 
-        public ActionResult TotalCreateTask(int? pageNumber)
+        public async Task<ActionResult> TotalCreateTask(int? pageNumber)
         {
-            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
-            List<TaskList> _TotalTask = _teacherinterface.TotalCreatTask(_teachers.TeacherID);
+            int TeacherID = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser).TeacherID;
 
-            int page = pageNumber ?? 1;
-            var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
-
-            ViewBag.totalCount = Pager<TaskList>.totalCount;
-            ViewBag.page = Pager<TaskList>.page;
-            ViewBag.pageSize = Pager<TaskList>.pageSize;
-            ViewBag.totalPage = Pager<TaskList>.totalPage;
-
-            return View(_TotalTask);
-        }
-
-        public ActionResult TotalCompleteTask(int? pageNumber)
-        {
-            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
-            List<TaskList> _TotalTask = _teacherinterface.TeacherCompleteTask(_teachers.TeacherID);
+            List<TaskList> _TotalTask = new List<TaskList>();
+            _TotalTask = await WebApiHelper.TeacherCallApi(TeacherID, "TotalCreateTask");
 
             int page = pageNumber ?? 1;
             var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
@@ -148,11 +147,12 @@ namespace TaskManagement.Controllers
             return View(PaginationList);
         }
 
-        public ActionResult TotalPendingTask(int? pageNumber)
+        public async Task<ActionResult> TotalCompleteTask(int? pageNumber)
         {
-            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
-            List<TaskList> _TotalTask = _teacherinterface.TeacherPendingTask(_teachers.TeacherID);
+            int TeacherID = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser).TeacherID;
 
+            List<TaskList> _TotalTask = new List<TaskList>();
+            _TotalTask = await WebApiHelper.TeacherCallApi(TeacherID, "TotalCompleteTask");
 
             int page = pageNumber ?? 1;
             var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
@@ -162,14 +162,15 @@ namespace TaskManagement.Controllers
             ViewBag.pageSize = Pager<TaskList>.pageSize;
             ViewBag.totalPage = Pager<TaskList>.totalPage;
 
-            return View(_TotalTask);
+            return View(PaginationList);
         }
 
-        public ActionResult TotalAssignTask(int? pageNumber)
+        public async Task<ActionResult> TotalPendingTask(int? pageNumber)
         {
-            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
-            List<TaskList> _TotalTask = _teacherinterface.TotalAssignTask(_teachers.TeacherID);
+            int TeacherID = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser).TeacherID;
 
+            List<TaskList> _TotalTask = new List<TaskList>();
+            _TotalTask = await WebApiHelper.TeacherCallApi(TeacherID, "TotalPendingTask");
 
             int page = pageNumber ?? 1;
             var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
@@ -179,12 +180,15 @@ namespace TaskManagement.Controllers
             ViewBag.pageSize = Pager<TaskList>.pageSize;
             ViewBag.totalPage = Pager<TaskList>.totalPage;
 
-            return View(_TotalTask);
+            return View(PaginationList);
         }
-        public ActionResult TotalExpiredTask(int? pageNumber)
+
+        public async Task<ActionResult> TotalAssignTask(int? pageNumber)
         {
-            Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
-            List<TaskList> _TotalTask = _teacherinterface.TotalExpiredTask(_teachers.TeacherID);
+            int TeacherID = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser).TeacherID;
+
+            List<TaskList> _TotalTask = new List<TaskList>();
+            _TotalTask = await WebApiHelper.TeacherCallApi(TeacherID, "TotalAssignTask");
 
 
             int page = pageNumber ?? 1;
@@ -195,7 +199,24 @@ namespace TaskManagement.Controllers
             ViewBag.pageSize = Pager<TaskList>.pageSize;
             ViewBag.totalPage = Pager<TaskList>.totalPage;
 
-            return View(_TotalTask);
+            return View(PaginationList);
+        }
+        public async Task<ActionResult> TotalExpiredTask(int? pageNumber)
+        {
+            int TeacherID = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser).TeacherID;
+
+            List<TaskList> _TotalTask = new List<TaskList>();
+            _TotalTask = await WebApiHelper.TeacherCallApi(TeacherID, "TotalExpiredTask");
+
+            int page = pageNumber ?? 1;
+            var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
+
+            ViewBag.totalCount = Pager<TaskList>.totalCount;
+            ViewBag.page = Pager<TaskList>.page;
+            ViewBag.pageSize = Pager<TaskList>.pageSize;
+            ViewBag.totalPage = Pager<TaskList>.totalPage;
+
+            return View(PaginationList);
         }
 
         public ActionResult DeleteTask(int id)

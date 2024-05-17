@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TaskManagement.Common;
 using TaskManagement.CustomFilter;
 using TaskManagement.Helper.Session;
 using TaskManagement.Models.DBContext;
@@ -18,25 +22,41 @@ namespace TaskManagement.Controllers
         TaskManagementEntities _context = new TaskManagementEntities();
         ITaskInterface _task = new TaskServices();
 
-        public ActionResult Student()
+        public async Task<ActionResult> Student()
         {
 
             string username = LoginSession.LoginUser;
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
 
-            ViewBag.TotalTask = _task.TotalTask(studentId).Count();
-            ViewBag.TotalCompeteTask = _task.CompleteTask(studentId).Count();
-            ViewBag.TotalPendingTask = _task.PendingTask(studentId).Count();
-            ViewBag.TotalExpiredTask = _task.ExpiredTask(studentId).Count();
+            List<AssignmentList> TotalTask = new List<AssignmentList>();
+            TotalTask = await WebApiHelper.StudentCallApi(studentId, "ShowTask");
+
+            List<AssignmentList> TotalCompeteTask = new List<AssignmentList>();
+            TotalCompeteTask = await WebApiHelper.StudentCallApi(studentId, "ShowTotalComplete");
+
+            List<AssignmentList> TotalPendingTask = new List<AssignmentList>();
+            TotalPendingTask = await WebApiHelper.StudentCallApi(studentId, "ShowPending");
+
+            List<AssignmentList> TotalExpiredTask = new List<AssignmentList>();
+            TotalExpiredTask = await WebApiHelper.StudentCallApi(studentId, "ShowExpired");
+
+            ViewBag.TotalTask = TotalTask.Count();
+            ViewBag.TotalCompeteTask = TotalCompeteTask.Count();
+            ViewBag.TotalPendingTask = TotalPendingTask.Count();
+            ViewBag.TotalExpiredTask = TotalExpiredTask.Count();
 
             return View();
         }
 
-        public ActionResult ShowTask(int? pageNumber)
+        public async Task<ActionResult> ShowTask(int? pageNumber)
         {
             string username = LoginSession.LoginUser;
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
-            List<AssignmentList> _assignments = _task.GetAssignmentTasks(studentId);
+            List<AssignmentList> _assignments = new List<AssignmentList>();
+
+            _assignments = await WebApiHelper.StudentCallApi(studentId, "ShowTask");
+
+            TempData["TotalTask"] = _assignments.Count();
 
             int page = pageNumber ?? 1;
             var PaginationList = Pager<AssignmentList>.Pagination(_assignments, page);
@@ -67,11 +87,14 @@ namespace TaskManagement.Controllers
             return RedirectToAction("Login");
         }
 
-        public ActionResult ShowTotalComplete(int? pageNumber)
+        public async Task<ActionResult> ShowTotalComplete(int? pageNumber)
         {
             string username = LoginSession.LoginUser;
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
-            List<AssignmentList> _assignments = _task.CompleteTask(studentId);
+            List<AssignmentList> _assignments = new List<AssignmentList>();
+
+            _assignments = await WebApiHelper.StudentCallApi(studentId, "ShowTotalComplete");
+            TempData["TotalCompeteTask"] = _assignments.Count();
 
             int page = pageNumber ?? 1;
             var PaginationList = Pager<AssignmentList>.Pagination(_assignments, page);
@@ -84,12 +107,15 @@ namespace TaskManagement.Controllers
             return View(PaginationList);
         }
 
-        public ActionResult ShowPending(int? pageNumber)
+        public async Task<ActionResult> ShowPending(int? pageNumber)
         {
             string username = LoginSession.LoginUser;
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
-            List<AssignmentList> _assignments = _task.PendingTask(studentId);
 
+            List<AssignmentList> _assignments = new List<AssignmentList>();
+
+            _assignments = await WebApiHelper.StudentCallApi(studentId, "ShowPending");
+            TempData["TotalPendingTask"] = _assignments.Count();
             int page = pageNumber ?? 1;
             var PaginationList = Pager<AssignmentList>.Pagination(_assignments, page);
 
@@ -101,11 +127,15 @@ namespace TaskManagement.Controllers
             return View(PaginationList);
         }
 
-        public ActionResult ShowExpired(int? pageNumber)
+        public async Task<ActionResult> ShowExpired(int? pageNumber)
         {
             string username = LoginSession.LoginUser;
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
-            List<AssignmentList> _assignments = _task.ExpiredTask(studentId);
+
+            List<AssignmentList> _assignments = new List<AssignmentList>();
+
+            _assignments = await WebApiHelper.StudentCallApi(studentId, "ShowExpired");
+            TempData["TotalCompeteTask"] = _assignments.Count();
 
             int page = pageNumber ?? 1;
             var PaginationList = Pager<AssignmentList>.Pagination(_assignments, page);

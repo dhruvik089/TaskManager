@@ -93,7 +93,7 @@
 
     <div class="container">
 
-        <h3 class="text-center">All Assign Task </h3>
+        <h3 class="text-center">All Pending Task </h3>
 
         <table class="table">
             <thead>
@@ -113,15 +113,7 @@
                         <td>@item.Username</td>
                         <td>@item.TaskName</td>
                         <td>@item.Description</td>
-                        <td>@item.Deadline</td>
-                        @if (@item.Task_complete)
-                        {
-                            <td class="text-success">Submited</td>
-                        }
-                        else
-                        {
-                            <td class="text-danger">Pendding</td>
-                        }
+                        <td>@item.Deadline</td>                     
 
                     </tr>
                 }
