@@ -29,16 +29,16 @@ namespace TaskManagement.Controllers
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
 
             List<AssignmentList> TotalTask = new List<AssignmentList>();
-            TotalTask = await WebApiHelper.StudentCallApi(studentId, "ShowTask");
+            TotalTask = await StudentWebHelper.StudentCallApi(studentId, "ShowTask");
 
             List<AssignmentList> TotalCompeteTask = new List<AssignmentList>();
-            TotalCompeteTask = await WebApiHelper.StudentCallApi(studentId, "ShowTotalComplete");
+            TotalCompeteTask = await StudentWebHelper.StudentCallApi(studentId, "ShowTotalComplete");
 
             List<AssignmentList> TotalPendingTask = new List<AssignmentList>();
-            TotalPendingTask = await WebApiHelper.StudentCallApi(studentId, "ShowPending");
+            TotalPendingTask = await StudentWebHelper.StudentCallApi(studentId, "ShowPending");
 
             List<AssignmentList> TotalExpiredTask = new List<AssignmentList>();
-            TotalExpiredTask = await WebApiHelper.StudentCallApi(studentId, "ShowExpired");
+            TotalExpiredTask = await StudentWebHelper.StudentCallApi(studentId, "ShowExpired");
 
             ViewBag.TotalTask = TotalTask.Count();
             ViewBag.TotalCompeteTask = TotalCompeteTask.Count();
@@ -54,7 +54,7 @@ namespace TaskManagement.Controllers
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
             List<AssignmentList> _assignments = new List<AssignmentList>();
 
-            _assignments = await WebApiHelper.StudentCallApi(studentId, "ShowTask");
+            _assignments = await StudentWebHelper.StudentCallApi(studentId, "ShowTask");
 
             TempData["TotalTask"] = _assignments.Count();
 
@@ -93,7 +93,7 @@ namespace TaskManagement.Controllers
             int studentId = _context.Students.FirstOrDefault(x => x.Username == username).StudentID;
             List<AssignmentList> _assignments = new List<AssignmentList>();
 
-            _assignments = await WebApiHelper.StudentCallApi(studentId, "ShowTotalComplete");
+            _assignments = await StudentWebHelper.StudentCallApi(studentId, "ShowTotalComplete");
             TempData["TotalCompeteTask"] = _assignments.Count();
 
             int page = pageNumber ?? 1;
@@ -114,7 +114,7 @@ namespace TaskManagement.Controllers
 
             List<AssignmentList> _assignments = new List<AssignmentList>();
 
-            _assignments = await WebApiHelper.StudentCallApi(studentId, "ShowPending");
+            _assignments = await StudentWebHelper.StudentCallApi(studentId, "ShowPending");
             TempData["TotalPendingTask"] = _assignments.Count();
             int page = pageNumber ?? 1;
             var PaginationList = Pager<AssignmentList>.Pagination(_assignments, page);
@@ -134,7 +134,7 @@ namespace TaskManagement.Controllers
 
             List<AssignmentList> _assignments = new List<AssignmentList>();
 
-            _assignments = await WebApiHelper.StudentCallApi(studentId, "ShowExpired");
+            _assignments = await StudentWebHelper.StudentCallApi(studentId, "ShowExpired");
             TempData["TotalCompeteTask"] = _assignments.Count();
 
             int page = pageNumber ?? 1;

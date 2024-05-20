@@ -132,20 +132,20 @@ namespace TaskManagement.Repository.Services.TaskServices
         public List<AssignmentList> TotalTask(int id)
         {
             List<AssignmentList> assignmentLists = new List<AssignmentList>();
-            //try
-            //{
+            try
+            {
 
-            //    SqlParameter[] sqlParameters = new SqlParameter[]
-            //    {
-            //          new SqlParameter("@id",id)
-            //    };
-            //    List<AssignmentList> assignmentLists = _context.Database.SqlQuery<AssignmentList>("exec totalTask @id", sqlParameters).ToList();
-            //    return assignmentLists;
-            //}
-            //catch (Exception e)
-            //{
-            //    throw e;
-            //}
+                SqlParameter[] sqlParameters = new SqlParameter[]
+                {
+                      new SqlParameter("@id",id)
+                };
+                assignmentLists = _context.Database.SqlQuery<AssignmentList>("exec totalTask @id", sqlParameters).ToList();
+                return assignmentLists;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
             return assignmentLists;
         }
 

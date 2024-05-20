@@ -98,7 +98,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>TaskID</th>
                     <th>Student Name</th>
                     <th>Task Name</th>
                     <th>Description</th>
@@ -109,7 +108,6 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.TaskID</td>
                         <td>@item.Username</td>
                         <td>@item.TaskName</td>
                         <td>@item.Description</td>
@@ -131,7 +129,7 @@
 
             @for (int i = 1; i <= ViewBag.totalPage; i++)
             {
-                @Html.ActionLink(@i.ToString(), "TotalCompleteTask", "Teacher", new { pageNumber = i }, htmlAttributes: new { @class = "btn btn-info mx-1 Previous" })
+                @Html.ActionLink(@i.ToString(), "TotalExpiredTask", "Teacher", new { pageNumber = i }, htmlAttributes: new { @class = "btn btn-info mx-1 Previous" })
             }
 
             @*@if (ViewBag.page * ViewBag.pageSize < ViewBag.totalCount)

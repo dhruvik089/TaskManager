@@ -185,7 +185,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
-    <Compile Include="Common\WebApiHelper.cs" />
+    <Compile Include="Common\StudentWebHelper.cs" />
+    <Compile Include="Common\TeacherWebHelper.cs" />
     <Compile Include="Controllers\LoginSignupController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />

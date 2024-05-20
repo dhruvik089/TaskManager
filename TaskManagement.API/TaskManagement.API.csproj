@@ -19,10 +19,10 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressSSLPort>44313</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -256,6 +256,10 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TaskManagement.Helper\TaskManagement.Helper.csproj">
+      <Project>{5c680ca6-3a4f-4fc0-906f-9a57b7a871e5}</Project>
+      <Name>TaskManagement.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaskManagement.Models\TaskManagement.Models.csproj">
       <Project>{A9F25795-0DE9-4B6F-9475-2AAD1CDB170C}</Project>
       <Name>TaskManagement.Models</Name>

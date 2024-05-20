@@ -39,11 +39,11 @@ namespace TaskManagement.Controllers
             List<TaskList> TotalAssignTask = new List<TaskList>();
             List<TaskList> TotalExpiredTask = new List<TaskList>();
 
-            PendingTask = await WebApiHelper.TeacherCallApi(_teachers.TeacherID, "TotalPendingTask");
-            CompleteTask= await WebApiHelper.TeacherCallApi(_teachers.TeacherID, "TotalCompleteTask");
-            TotalTask = await WebApiHelper.TeacherCallApi(_teachers.TeacherID, "TotalCreateTask");
-            TotalAssignTask = await WebApiHelper.TeacherCallApi(_teachers.TeacherID, "TotalAssignTask");
-            TotalExpiredTask = await WebApiHelper.TeacherCallApi(_teachers.TeacherID, "TotalExpiredTask");
+            PendingTask = await TeacherWebHelper.TeacherCallApi(_teachers.TeacherID, "TotalPendingTask");
+            CompleteTask = await TeacherWebHelper.TeacherCallApi(_teachers.TeacherID, "TotalCompleteTask");
+            TotalTask = await TeacherWebHelper.TeacherCallApi(_teachers.TeacherID, "TotalCreateTask");
+            TotalAssignTask = await TeacherWebHelper.TeacherCallApi(_teachers.TeacherID, "TotalAssignTask");
+            TotalExpiredTask = await TeacherWebHelper.TeacherCallApi(_teachers.TeacherID, "TotalExpiredTask");
 
             ViewBag.PendingTask = PendingTask.Count();
             ViewBag.CompleteTask = CompleteTask.Count();
@@ -63,12 +63,11 @@ namespace TaskManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateTask(TaskModel _taskModel, int TaskID)
+        public ActionResult CreateTask(TaskModel _taskModel)
         {
             if (ModelState.IsValid)
             {
-                _task.AddTask(_taskModel);
-                Session["TaskID"] = TaskID;
+                TeacherWebHelper.CreateTask(_taskModel, "CrateTask");
                 return RedirectToAction("Teacher");
             }
             else
@@ -77,7 +76,7 @@ namespace TaskManagement.Controllers
             }
         }
 
-        public ActionResult AssignTasks(int id)
+        public async Task<ActionResult> AssignTasks(int id)
         {
 
             Teachers _teachers = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser);
@@ -86,14 +85,14 @@ namespace TaskManagement.Controllers
             List<Tasks> tasks = _context.Tasks.Where(m => m.CreatorID == _teachers.TeacherID).ToList();
             List<TaskModel> _taskList = _task.ConvertTaskToTaskModel(tasks);
             ViewBag.AllTask = _taskList;
-            List<StudentModel> _studentList = _task.NotAsignTask(id);
+            List<StudentModel> _studentList = await TeacherWebHelper.NotAssignTask(id, "NotAsignTask");
             Session["AllTask"] = _studentList;
             ViewBag.AllStudent = _studentList;
             return PartialView("AssignTasks", _studentList);
         }
 
         [HttpPost]
-        public ActionResult AssignTasks(List<int> StudentID)
+        public async Task<ActionResult> AssignTasks(List<int> StudentID)
         {
             try
             {
@@ -110,8 +109,7 @@ namespace TaskManagement.Controllers
                         };
                         assignments.Add(assignment);
                     }
-
-                    _teacherinterface.AssignAssignment(assignments);
+                    await TeacherWebHelper.AssignTask(assignments, "AsignTask");
                     return RedirectToAction("Teacher", "Teacher");
                 }
                 return View();
@@ -134,7 +132,7 @@ namespace TaskManagement.Controllers
             int TeacherID = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser).TeacherID;
 
             List<TaskList> _TotalTask = new List<TaskList>();
-            _TotalTask = await WebApiHelper.TeacherCallApi(TeacherID, "TotalCreateTask");
+            _TotalTask = await TeacherWebHelper.TeacherCallApi(TeacherID, "TotalCreateTask");
 
             int page = pageNumber ?? 1;
             var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
@@ -152,7 +150,7 @@ namespace TaskManagement.Controllers
             int TeacherID = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser).TeacherID;
 
             List<TaskList> _TotalTask = new List<TaskList>();
-            _TotalTask = await WebApiHelper.TeacherCallApi(TeacherID, "TotalCompleteTask");
+            _TotalTask = await TeacherWebHelper.TeacherCallApi(TeacherID, "TotalCompleteTask");
 
             int page = pageNumber ?? 1;
             var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
@@ -170,7 +168,7 @@ namespace TaskManagement.Controllers
             int TeacherID = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser).TeacherID;
 
             List<TaskList> _TotalTask = new List<TaskList>();
-            _TotalTask = await WebApiHelper.TeacherCallApi(TeacherID, "TotalPendingTask");
+            _TotalTask = await TeacherWebHelper.TeacherCallApi(TeacherID, "TotalPendingTask");
 
             int page = pageNumber ?? 1;
             var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
@@ -188,7 +186,7 @@ namespace TaskManagement.Controllers
             int TeacherID = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser).TeacherID;
 
             List<TaskList> _TotalTask = new List<TaskList>();
-            _TotalTask = await WebApiHelper.TeacherCallApi(TeacherID, "TotalAssignTask");
+            _TotalTask = await TeacherWebHelper.TeacherCallApi(TeacherID, "TotalAssignTask");
 
 
             int page = pageNumber ?? 1;
@@ -198,15 +196,17 @@ namespace TaskManagement.Controllers
             ViewBag.page = Pager<TaskList>.page;
             ViewBag.pageSize = Pager<TaskList>.pageSize;
             ViewBag.totalPage = Pager<TaskList>.totalPage;
+          
 
             return View(PaginationList);
         }
+
         public async Task<ActionResult> TotalExpiredTask(int? pageNumber)
         {
             int TeacherID = _context.Teachers.FirstOrDefault(m => m.Username == LoginSession.LoginUser).TeacherID;
 
             List<TaskList> _TotalTask = new List<TaskList>();
-            _TotalTask = await WebApiHelper.TeacherCallApi(TeacherID, "TotalExpiredTask");
+            _TotalTask = await TeacherWebHelper.TeacherCallApi(TeacherID, "TotalExpiredTask");
 
             int page = pageNumber ?? 1;
             var PaginationList = Pager<TaskList>.Pagination(_TotalTask, page);
@@ -219,9 +219,10 @@ namespace TaskManagement.Controllers
             return View(PaginationList);
         }
 
-        public ActionResult DeleteTask(int id)
+        public async Task<ActionResult> DeleteTask(int id)
         {
-            if (_teacherinterface.DeleteTask(id))
+            int check = await TeacherWebHelper.DeleteTask(id);
+            if (check == 0)
             {
                 TempData["deleteTask"] = "Task Delete successfully";
             }

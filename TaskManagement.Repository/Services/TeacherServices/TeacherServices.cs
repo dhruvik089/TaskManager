@@ -37,7 +37,6 @@ namespace TaskManagement.Repository.Services.TeacherServices
             catch (Exception e) { throw e; }
         }
 
-
         public List<Assignment> AssignAssignment(List<AssignmentModel> assignments)
         {
             List<Assignment> assignedAssignments = new List<Assignment>();
@@ -120,6 +119,24 @@ namespace TaskManagement.Repository.Services.TeacherServices
             }
         }
 
+        public List<TaskList> TotalExpiredTask(int id)
+        {
+            try
+            {
+                SqlParameter[] _sqlParameters = new SqlParameter[]
+                {
+                    new SqlParameter("@id",id)
+                };
+
+                List<TaskList> _taskList = _registerTeacher.Database.SqlQuery<TaskList>("exec TeacherExpiredTask @id", _sqlParameters).ToList();
+                return _taskList;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public bool DeleteTask(int id)
         {
             SqlParameter[] sqlParameters = new SqlParameter[]
@@ -138,24 +155,6 @@ namespace TaskManagement.Repository.Services.TeacherServices
                 return false;
             }
 
-        }
-
-        public List<TaskList> TotalExpiredTask(int id)
-        {
-            try
-            {
-                SqlParameter[] _sqlParameters = new SqlParameter[]
-                {
-                    new SqlParameter("@id",id)
-                };
-
-                List<TaskList> _taskList = _registerTeacher.Database.SqlQuery<TaskList>("exec TeacherExpiredTask @id", _sqlParameters).ToList();
-                return _taskList;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
         }
     }
 }

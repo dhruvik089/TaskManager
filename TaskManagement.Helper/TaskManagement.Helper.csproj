@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper\CityHelper\CityHelper.cs" />
+    <Compile Include="Helper\SpHelper\SpHelper.cs" />
     <Compile Include="Helper\StateHelper\StateHelper.cs" />
     <Compile Include="Helper\StudentHelper\StudentHelper.cs" />
     <Compile Include="Helper\TaskHelper\TaskHelper.cs" />

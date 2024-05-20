@@ -72,7 +72,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li>@Html.ActionLink("Create Task", "CreateTask")</li>
-              
+
                 </ul>
             </li>
         </ul>
@@ -139,21 +139,43 @@
         <div class="d-flex justify-content-end">
 
 
-            @*@if (ViewBag.page > 1)
+            @if (ViewBag.page > 1)
             {
 
                 @Html.ActionLink("Previous", "TotalCompleteTask", "Teacher", new { pageNumber = ViewBag.page - 1 }, htmlAttributes: new { @class = "btn btn-info Previous" })
-            }*@
-
-            @for (int i = 1; i <= ViewBag.totalPage; i++)
-            {
-                @Html.ActionLink(@i.ToString(), "TotalCreateTask", "Teacher", new { pageNumber = i }, htmlAttributes: new { @class = "btn btn-info mx-1 Previous" })
             }
 
-            @*@if (ViewBag.page * ViewBag.pageSize < ViewBag.totalCount)
+            @{int page = 1; }
+
+            @*@for (int i = 1; i <= ViewBag.totalPage; i++)*@
+
+
+            @while (true)
+            {
+                if (page < 5)
+                {
+                    for (int j = 1; j <= 5; j++)
+                    {
+                        @Html.ActionLink(@page.ToString(), "TotalCreateTask", "Teacher", new { pageNumber = page }, htmlAttributes: new { @class = "btn btn-info mx-1 Previous" })
+                        page++;
+                    }
+                }
+
+                if (page > ViewBag.totalPage)
+                {
+                    break;
+                }
+            }
+
+
+
+
+
+            @if (ViewBag.page * ViewBag.pageSize < ViewBag.totalCount)
             {
                 @Html.ActionLink("Next", "TotalCompleteTask", "Teacher", new { pageNumber = ViewBag.page + 1 }, htmlAttributes: new { @class = "btn btn-info mx-2 Next" })
-            }*@
+            }
+
 
         </div>
 
@@ -163,7 +185,7 @@
 
 
 </div>
- 
+
 <div class="footer">
     <div class="copyright">
         <p>Copyright &copy; Designed & Developed by <a href="https://growth.in">Task Management</a> 2022</p>

@@ -5,11 +5,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TaskManagement.Helper.Helper.SpHelper;
 using TaskManagement.Helper.Session;
 using TaskManagement.Models.DBContext;
 using TaskManagement.Models.ViewModel;
 using TaskManagement.Repository.Interface.ITaskInterface;
 using TaskManagement.Repository.Services.TaskServices;
+
 
 namespace TaskManagement.API.Controllers
 {
@@ -17,7 +19,6 @@ namespace TaskManagement.API.Controllers
     {
 
         TaskManagementEntities _context = new TaskManagementEntities();
-        
 
         [Route("api/student/ShowTask")]
         [HttpGet]
@@ -31,7 +32,7 @@ namespace TaskManagement.API.Controllers
                 {
                     new SqlParameter("@id",id)
                 };
-                List<AssignmentList> _taskView = _context.Database.SqlQuery<AssignmentList>("Exec ShowAssignment @id", _perameter).ToList();
+                List<AssignmentList> _taskView = _context.Database.SqlQuery<AssignmentList>(SpHelper.ShowAssignment, _perameter).ToList();
 
                 return _taskView;
             }
@@ -105,6 +106,6 @@ namespace TaskManagement.API.Controllers
                 throw e;
             }
         }
-              
+
     }
 }
