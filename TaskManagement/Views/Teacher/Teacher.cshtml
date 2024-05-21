@@ -113,14 +113,22 @@
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
+                <div class="card gradient-4 gradient-4-shadow">
+                    <div class="card-body">
+                        <h3 class="card-title text-white">@Html.ActionLink("Total Assign Task", "TotalAssignTask", "Teacher", htmlAttributes: new { @class = "text-decoration-none text-white" })</h3>
+                        <div class="d-inline-block">
+                            <h2 class="text-white"> @ViewBag.TotalAssignTask</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
                 <div class="card gradient-2 gradient-2-shadow">
                     <div class="card-body">
                         <h3 class="card-title text-white">@Html.ActionLink("Total Complete Task", "TotalCompleteTask", "Teacher", htmlAttributes: new { @class = "text-decoration-none text-white" })</h3>
                         <div class="d-inline-block">
                             <h2 class="text-white">  @ViewBag.CompleteTask</h2>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -134,20 +142,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card gradient-4 gradient-4-shadow">
-                    <div class="card-body">
-                        <h3 class="card-title text-white">@Html.ActionLink("Total Assign Task", "TotalAssignTask", "Teacher", htmlAttributes: new { @class = "text-decoration-none text-white" })</h3>
-                        <div class="d-inline-block">
-                            <h2 class="text-white"> @ViewBag.TotalAssignTask</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <div class="col-lg-3 col-sm-6">
                 <div class="card gradient-6 gradient-6-shadow">
                     <div class="card-body">
-                        <h3 class="card-title text-white">@Html.ActionLink("Total Expired Task", "TotalExpiredTask", "Teacher", htmlAttributes: new { @class = "text-decoration-none text-white" })</h3>
+                        <h3 class="card-title text-white">@Html.ActionLink("Total Pending Expired Task", "TotalExpiredTask", "Teacher", htmlAttributes: new { @class = "text-decoration-none text-white" })</h3>
                         <div class="d-inline-block">
                             <h2 class="text-white"> @ViewBag.TotalExpiredTask</h2>
                         </div>

@@ -101,7 +101,7 @@
                         <th>Student Name</th>
                         <th>Task Name</th>
                         <th>Description</th>
-                        <th>Action</th>
+                        @*<th>Action</th>*@
                     </tr>
                 </thead>
                 <tbody>
@@ -112,32 +112,47 @@
                             <td>@item.Username</td>
                             <td>@item.TaskName</td>
                             <td>@item.Description</td>
-                            <td>
-                                <button class="btn btn-info">Accept</button>
-                                <button class="btn btn-danger">Reject</button>
-                            </td>
+                            @*<td>
+                            <button class="btn btn-info">Accept</button>
+                            <button class="btn btn-danger">Reject</button>
+                        </td>*@
                         </tr>
                     }
                 </tbody>
             </table>
+          
             <div class="d-flex justify-content-end">
 
+                @{
 
-                @*@if (ViewBag.page > 1)
-                {
-
-                    @Html.ActionLink("Previous", "TotalCompleteTask", "Teacher", new { pageNumber = ViewBag.page - 1 }, htmlAttributes: new { @class = "btn btn-info Previous" })
-                }*@
-
-                @for (int i = 1; i <= ViewBag.totalPage; i++)
-                {
-                    @Html.ActionLink(@i.ToString(), "TotalCompleteTask", "Teacher", new { pageNumber = i }, htmlAttributes: new { @class = "btn btn-info mx-1 Previous" })
+                    int StartPage = Math.Max(1, ViewBag.page - 2);
+                    int EndingPage = Math.Min(ViewBag.totalPage, StartPage + 4);
                 }
 
-                @*@if (ViewBag.page * ViewBag.pageSize < ViewBag.totalCount)
+                @if (ViewBag.page > 1)
                 {
-                    @Html.ActionLink("Next", "TotalCompleteTask", "Teacher", new { pageNumber = ViewBag.page + 1 }, htmlAttributes: new { @class = "btn btn-info mx-2 Next" })
-                }*@
+
+                    @Html.ActionLink("First", "TotalCompleteTask", "Teacher", new { pageNumber = 1 }, htmlAttributes: new { @class = "btn btn-info Previous" })
+                }
+
+
+
+                @for (int i = StartPage; i <= EndingPage; i++)
+                {
+                    bool isActive = (i == ViewBag.page);
+
+                    string buttonClass = isActive ? "btn btn-info mx-1 active" : "btn btn-info mx-1 next";
+
+                    @Html.ActionLink(@i.ToString(), "TotalCompleteTask", "Teacher", new { pageNumber = i }, htmlAttributes: new { @class = buttonClass })
+
+
+
+                }
+                @if (ViewBag.page * ViewBag.pageSize < ViewBag.totalCount)
+                {
+                    @Html.ActionLink("Last", "TotalCompleteTask", "Teacher", new { pageNumber = ViewBag.totalPage }, htmlAttributes: new { @class = "btn btn-info mx-2 Next" })
+
+                }
 
             </div>
 

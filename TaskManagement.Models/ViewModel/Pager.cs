@@ -16,7 +16,7 @@ namespace TaskManagement.Models.ViewModel
         
         public static List<T> Pagination(List<T> _list, int page)
         {            
-            int pageSize = 2;
+            int pageSize = 20;
 
             int totalCount = _list.Count();
             int totalPage = (int)Math.Ceiling((decimal)totalCount / pageSize);

@@ -48,7 +48,6 @@ namespace TaskManagement.Controllers.LoginSignup
                         LoginSession.LoginUser = loginDetails.Username;
                         LoginSession.UserRole = loginDetails.UserRole;
                         ViewBag.username = loginDetails.Username;
-                        string name = loginDetails.Username;
                         Session["Teachername"] = LoginSession.LoginUser;
 
                         TempData["SuccessLogin"] = "Login SuccessFully";
@@ -80,7 +79,6 @@ namespace TaskManagement.Controllers.LoginSignup
 
             else
             {
-                //TempData["LoginFail"] = "Invalid Email or Password";
                 return View();
             }
         }
